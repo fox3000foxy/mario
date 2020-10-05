@@ -1,0 +1,431 @@
+<head>
+<title>Platformer</title>
+</head>
+
+<body bgcolor="#2f4f4f">
+<center>
+<canvas id="canvas" width="637" height="480">
+</center>
+<button onclick="keysDown[65] = keysDown[65]?false:true" style="width:100px;height:20px"> < </button>
+<button onclick="keysDown[32] = keysDown[32]?false:true" style="width:100px;height:20px"> ^ </button>
+<button onclick="keysDown[68] = keysDown[68]?false:true" style="width:100px;height:20px"> > </button>
+<script>
+
+var canvas = document.getElementById("canvas");
+var ctx = canvas.getContext("2d");
+
+canvas.width  = window.innerWidth - 100;
+canvas.height = window.innerHeight - 100;
+//canvas.width = 1000;
+//canvas.height = 450;
+
+leftkey = 0
+rightkey=0
+spacekey=0
+
+var camerax, cameray = 0;
+var mapWidth, mapHeight;
+var level = 0;
+var lives = 7;
+var levels = [
+["                                                            ",
+"                                                            ",
+"                                                            ",
+"                                                            ",
+"                                                            ",
+"                        xx                                  ",
+"                 xxx                         xxx            ",
+"                                                            ",
+"            xx                           xx                 ",
+"   o                        xxx                         O   ",
+"xxxxxxxxxx                          xx              xxxxxxxx"],
+
+["                                                            ",
+"                                                            ",
+"                  x                                         ",
+"                       x                                    ",
+"               x                                            ",
+"                          x         x                       ",
+"            x                 xx                            ",
+"                                        x                   ",
+"         x                                                  ",
+"   o                                         x          O   ",
+"xxxxxxxx                                           xxxxxxxxx"],
+
+["                      x       x                             ",
+"       e        x                   x                       ",
+"                                                            ",
+"                                                            ",
+"                                      x                     ",
+"                 x                                          ",
+"                            e                               ",
+"                                                            ",
+"         x                                                  ",
+"   o           x                           xxx          O   ",
+"xxxxxxxx                                           xxxxxxxxx"],
+
+["                                            e               ",
+"                                                            ",
+"       e                                                    ",
+"                                                            ",
+"                       x                                    ",
+"                 x                                          ",
+"             x              x                               ",
+"                                  x      x                  ",
+"         x                                                  ",
+"   o                  e                     xx          O   ",
+"xxxxxxxx                                           xxxxxxxxx"],
+
+["                                                            ",
+"                                   x                        ",
+"     e                      x            x                  ",
+"               e                                            ",
+"                          x                  x              ",
+"                                                            ",
+"                            x                               ",
+"                                               x            ",
+"                                                            ",
+"   o                           x                        O   ",
+"xxxxxxxx                                           xxxxxxxxx",
+"            x                          e                    ",
+"                             x                              ",
+"    e           x                                   e       ",
+"                          x                                 ",
+"                      x                                     "], 
+
+["                                                            ",
+"                                                            ",
+"                            O                               ",
+"                      xxxxxxxxxxxxxxx                       ",
+"                                          xxx               ",
+"                              xxx                           ",
+"                                    x                       ",
+"                                                            ",
+"                         x                                  ",
+"                                e                           ",
+"                                                            ",
+"                       x                                    ",
+"                   x                                        ",
+"             xxx                                            ",
+"        x                                                   ",
+"    x                                                       ",
+"                                                            ",
+"                                                            ",
+"  x                                                         ",
+"  xxx             xx              xxx                       ",
+"          xxx            xx              x                 ",
+"                                                            ",
+"                                                xxx         ",
+"                                                            ",
+"                                                            ",
+"                                                       e    ",
+"                    x      xxxxx       xxxxx                ",
+"                                                            ",
+"    e                                                       ",
+"                                                            ",
+"                xxxx                                        ",
+"                        o                                   ",
+"                       xxx                                  ",],
+
+["              e                          x                  ",
+"              x                          x                  ",
+"              x         x      x         x                  ",
+"       x      x                x         x        xxxxxx    ",
+"       x      x                x         x  x     x         ",
+"      xx      x     x          e         x        x         ",
+"       x      x                x         x        x         ",
+"x      x      x                x         x     x  x         ",
+"       x      xx               x         x        x         ",
+"   o   x      x                x         x x      x     O   ",
+"xxxxxxxx      x                x         x        xxxxxxxxxx",
+"              x       x        x                            ",
+"       exxxxxxx                x               x            ",
+"                               x                       e    ",
+"                   x           x            x               ",
+"xxxxxxxxxxxxxxx                xxxxxxxxxxx                  "]
+
+] 
+
+var player, blocks, projs, enemies, end, eblocks;
+
+function reset() {
+	if (lives < 0) {
+		lives = 7;
+		level = 0;
+	}
+	this.map = levels[level];
+	if (this.map == null) {
+		level = 0;
+		lives = 7;
+		this.map = levels[level];
+	}
+	blocks = [];
+	projs = [];
+	enemies = [];
+	eblocks = [];
+	mapWidth = this.map[0].split("").length*32;
+	mapHeight = this.map.length*32;
+	end = player = null;
+	for (i = 0; i < this.map.length; i++) { 
+		for (i1 = 0; i1 < this.map[i].split("").length; i1++) { 
+			if (this.map[i].split("")[i1] == "x") {
+				new Block(i1*32, i*32, "regular");
+			}
+			if (this.map[i].split("")[i1] == "o") {
+				new Player(i1*32, i*32);
+			}
+			if (this.map[i].split("")[i1] == "e") {
+				new Enemy(i1*32, i*32);
+				new Block(i1*32, i*32, "enemy");
+			}
+			if (this.map[i].split("")[i1] == "O") {
+				new End(i1*32, i*32);
+			}
+			if (this.map[i].split("")[i1] == "X") {
+				new Block(i1*32, i*32, "enemy");
+			}
+		}
+	}
+}
+
+reset();
+
+function collision(rect1, rect2) {
+	if (rect1.x < rect2.x + rect2.width &&
+	rect1.x + rect1.width > rect2.x &&
+	rect1.y < rect2.y + rect2.height &&
+	rect1.height + rect1.y > rect2.y) {
+		return true;
+	}
+	return false;
+}
+
+function Player(x, y) {
+	player = this;
+	this.x = x;
+	this.y = y;
+	this.width = 32;
+	this.height = 32;
+	this.xvel = 0;
+	this.yvel = 8;
+	this.onGround = false;
+	this.update = function() {
+		if (this.yvel < 12){
+			this.yvel += 1;
+		}
+		if (spacekey==1||keysDown[32] && this.onGround) {
+			this.yvel = -16
+			keysDown[32] = false;
+			spacekey=0
+		}
+		if (leftkey==1||keysDown[65]) {
+			this.xvel = -4;
+		} else if (rightkey==1||keysDown[68]) {
+			this.xvel = 4;
+		} else {
+			this.xvel = 0;
+		}
+		if (this.y > mapHeight) {
+			lives = lives - 1;
+			reset();
+		}
+		this.onGround = false;
+		this.x += this.xvel;
+		this.collide(this.xvel, 0);
+		this.y += this.yvel;
+		this.collide(0, this.yvel);
+		
+		if (collision(this, end)) {
+			level += 1;
+			reset();
+		}
+	}
+	this.render = function() {
+		ctx.fillStyle = "#00ffff";
+		ctx.fillRect(this.x - camerax, this.y - cameray, this.width, this.height);
+	}
+	this.collide = function(xvel, yvel) {
+		for (i = 0; i < blocks.length; i++) {
+			if (collision(this, blocks[i])) {
+				if (xvel > 0){
+					this.x = blocks[i].x - this.width;
+				}
+				if (xvel < 0){
+					this.x = blocks[i].x + blocks[i].width;
+				}
+				if (yvel > 0){
+					this.y = blocks[i].y - this.height;
+					this.onGround = true;
+				}
+				if (yvel < 0){
+					this.y = blocks[i].y + blocks[i].height;
+				}
+			}
+		}
+		for (i = 0; i < projs.length; i++) {
+			if (collision(this, projs[i])) {
+				lives = lives - 1;
+				reset();
+			}
+		}
+	}
+}
+
+function Block(x, y, type) {
+	blocks.push(this);
+	if (type == "enemy") {
+		eblocks.push(this);
+	}
+	this.x = x;
+	this.y = y;
+	this.width = 32;
+	this.height = 32;
+	this.type = type;
+	this.enemy = null;
+	this.render = function() {
+		if (this.type == "enemy") {
+			ctx.strokeStyle = "#7f7f7f";
+			ctx.strokeRect(this.x - camerax, this.y - cameray, this.width, this.height);
+		} else if (this.type == "regular") {
+			ctx.fillStyle = "#7f7f7f";
+			ctx.fillRect(this.x - camerax, this.y - cameray, this.width, this.height);
+		}
+	}
+}
+
+function Projectile(start, target, type) {
+	projs.push(this);
+	this.x = start.x;
+	this.y = start.y;
+	this.width = 10;
+	this.height = 10;
+	this.speed = 4;
+	this.type = type;
+	this.angle = Math.atan2(target.x - start.x, target.y - start.y);
+	this.sin = Math.sin(this.angle) * this.speed;
+	this.cos = Math.cos(this.angle) * this.speed;
+	this.update = function() {
+		if (this.type == "follow") {
+			this.angle = Math.atan2(target.x - this.x, target.y - this.y);
+			this.sin = Math.sin(this.angle) * this.speed;
+			this.cos = Math.cos(this.angle) * this.speed;
+			this.speed = 4;
+			this.width = this.height = 15;
+		}
+		this.x += this.sin;
+		this.y += this.cos;
+	}
+	this.render = function() {
+		ctx.fillStyle = "Orange";
+		if (this.type == "follow"){
+			ctx.fillStyle = "Red";
+		}
+		ctx.fillRect(this.x - camerax, this.y - cameray, this.width, this.height);
+	}
+}
+
+function Enemy(x, y) {
+	enemies.push(this);
+	this.x = x;
+	this.y = y;
+	this.width = 32;
+	this.height = 32;
+	this.shootCount = 0;
+	this.speed = 12;
+	this.target = null;
+	this.update = function() {
+		this.shootCount += 1;
+		if (this.shootCount > 60 && this.x-camerax >= 0 && this.x-camerax <= canvas.width) {
+			new Projectile(this, player, "direct");
+			this.shootCount = 0;
+		}
+	}
+	this.move = function(block) {
+		
+	}
+	this.render = function() {
+		ctx.fillStyle = "Orange"
+		ctx.fillRect(this.x - camerax, this.y - cameray, this.width, this.height);
+	}
+}
+
+function End(x, y) {
+	end = this;
+	this.x = x;
+	this.y = y;
+	this.width = 32;
+	this.height = 32;
+	this.render = function() {
+		ctx.fillStyle = "Lime"
+		ctx.fillRect(this.x - camerax, this.y - cameray, this.width, this.height);
+	}
+}
+
+var keysDown = {};
+addEventListener("keydown", function (e) {
+keysDown[e.keyCode] = true;
+//console.log(e.keyCode);
+}, false);
+addEventListener("keyup", function (e) {
+keysDown[e.keyCode] = false;
+}, false);
+
+function update() {
+	camerax = player.x + player.width/2 - canvas.width/2;
+	cameray = player.y + player.height/2 - canvas.height/2;
+	if (camerax < 0) {
+		camerax = 0;
+	}
+	if (camerax > mapWidth - canvas.width) {
+		camerax = mapWidth - canvas.width;
+	}
+	if (cameray < 0) {
+		cameray = 0;
+	}
+	if (cameray > mapHeight - canvas.height) {
+		cameray = mapHeight - canvas.height;
+	}
+	player.update();
+	for (i = 0; i < projs.length; i++) {
+		projs[i].update();
+	}
+	for (i = 0; i < enemies.length; i++) {
+		enemies[i].update();
+	}
+}
+	
+function render() {
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	for (i = 0; i < blocks.length; i++) {
+		blocks[i].render();
+	}
+	for (i = 0; i < projs.length; i++) {
+		projs[i].render();
+	}
+	for (i = 0; i < enemies.length; i++) {
+		enemies[i].render();
+	}
+	player.render();
+	end.render();
+	
+	ctx.fillStyle = "#7f7f7f";
+	ctx.font="20px Arial";
+	ctx.fillText("Level: " + (level+1), 10, 50);
+	ctx.fillStyle = "#7f7f7f";
+	ctx.font="20px Arial";
+	ctx.fillText("Lives: " + lives, 10, 75);
+};
+
+function main() {
+	update();
+	render();
+	requestAnimationFrame(main);
+};
+
+var w = window;
+requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame || w.msRequestAnimationFrame || w.mozRequestAnimationFrame;
+
+main();
+
+</script>
+</body>
