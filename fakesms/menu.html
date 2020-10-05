@@ -1,0 +1,124 @@
+<html>
+<head>
+<style>
+#top
+{
+position:fixed;
+left:0;
+top:-25px;
+width:100%;
+}
+#font
+{
+position:absolute;
+left:0;
+top:50;
+width:100%;
+height:90%
+}
+
+#bottom
+{
+position:fixed;
+left:0;
+top:90.7%;
+width:100%
+}
+
+.info
+{
+position:fixed;
+color: white;
+}
+</style>
+</head>
+<body>
+<!--<img src="font.png" id="font">-->
+<!--<iframe src="message.html" id="font" frameborder="none"></iframe>-->
+<br><br><br>
+<!--<div style="background:red;position:absolute;top:0%;background:url('font.png');padding:25px;color:#eeeeee;width:59%" contenteditable>lol</div>-->
+<!--<div style="background:red;position:absolute;left:40%;background:url('font.png');padding:25px;color:#eeeeee;width:100%;text-align:right" contenteditable>lol</div>-->
+
+<div id="message">
+<div style="text-align:right;background:#c5e5b7;padding:15px;//margin:0% 3px 0% 82%">Salut.</div>
+<br><div style="text-align:left;background:#d5d8db;padding:15px;//margin:0% 82% 0% 3px">Salut ca va ?</div>
+<br><div style="text-align:left;background:#d5d8db;padding:15px;//margin:0% 82% 0% 3px">Moi oui</div>
+</div>
+
+
+<br><br><br>
+<img src="top.png" id="top">
+<img src="bottom.png" id="bottom">
+<b><div contenteditable class="info" style="left:17%;top:10px" id="nom">Nom</div></b>
+<div contenteditable class="info" style="left:17%;top:27px;font-size :10px" id="num">Numéro</div></b>
+<button onclick="location.reload()" class="info" style="left:70%;top:4%;border:none;background:none;color:#76B20E">r</button>
+<button onclick="envoi()" class="info" style="left:82%;top:91%;z-index:3;border:none;background:none;"><img src="gris.png" id="fleche" style="width:45px;height:45px"></button>
+<button class="info" style="left:56%;top:4%;z-index:3;border:none;background:none;color:#76B20E" onclick='recois()'>A</button>
+<button class="info" style="left:46%;top:4%;z-index:3;border:none;background:none;color:#76B20E" onclick='savemessage()'>A</button>
+<button class="info" style="left:41%;top:4%;z-index:3;border:none;background:none;color:#76B20E" onclick='loadmessage()'>A</button>
+<script>
+function lol()
+{
+if (document.awn.awn.value!="")
+{
+document.getElementById("fleche").src = "vert.png"
+}
+else
+{
+document.getElementById("fleche").src = "gris.png"
+}
+}
+
+function envoi()
+{
+if (document.awn.awn.value!="")
+{
+hour = new Date().getHours().toString()
+hour = hour.length==1?"0"+hour:hour
+minutes = new Date().getMinutes().toString()
+minutes = minutes.length==1?"0"+minutes:minutes
+document.getElementById("message").innerHTML += '<br><div style="text-align:right;background:#c5e5b7;padding:15px;//margin:0% 3px 0% 82%">'+document.awn.awn.value+'<br><b style="color:darkcyan">CARD 1</b> '+hour+':'+minutes+'<\/div>'
+document.awn.awn.value = ""
+lol()
+document.awn.awn.focus()
+}
+}
+
+function recois()
+{
+if (document.awn.awn.value!="")
+{
+hour = new Date().getHours().toString()
+hour = hour.length==1?"0"+hour:hour
+minutes = new Date().getMinutes().toString()
+minutes = minutes.length==1?"0"+minutes:minutes
+
+document.getElementById("message").innerHTML += '<br><div style="text-align:left;background:#d5d8db;padding:15px;//margin:0% 82% 0% 3px">'+document.awn.awn.value+'<br><b style="color:darkcyan">CARD 1</b> '+hour+':'+minutes+'<\/div>'
+document.awn.awn.value = ""
+lol()
+document.awn.awn.focus()
+}
+}
+
+function loadmessage()
+{
+mysms = prompt("Discussion :","")
+document.getElementById('message').innerHTML = mysms.split("|")[0]
+document.getElementById("nom").innerHTML = mysms.split("|")[1].split("&")[0]
+document.getElementById("num").innerHTML = mysms.split("|")[1].split("&")[1]
+}
+
+function savemessage()
+{
+//alert(document.cookie.split("msg=")[1])
+nom = document.getElementById("nom").innerHTML
+num = document.getElementById("num").innerHTML
+myop = document.getElementById('message').innerHTML+"|"+nom+"&"+num
+prompt("Discussion:",myop)
+}
+</script>
+<form name="awn" class="info" style="left:14%;top:92%;">
+<input name="awn" placeholder="Entrez le message texte" style="border:none;font-size:20px" onkeyup="lol()">
+</form>
+</body>
+</html>

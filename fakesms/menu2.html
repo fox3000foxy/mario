@@ -1,0 +1,62 @@
+<html>
+<head>
+<style>
+#top
+{
+position:fixed;
+left:0;
+top:-25px;
+width:100%;
+}
+#font
+{
+position:absolute;
+left:0;
+top:50;
+width:100%;
+height:90%
+}
+
+#bottom
+{
+position:fixed;
+left:0;
+top:90.7%;
+width:100%
+}
+
+.info
+{
+position:fixed;
+color: white;
+}
+</style>
+</head>
+<body>
+<!--<img src="font.png" id="font">-->
+<iframe src="message.html" id="font" frameborder="none"></iframe>
+<img src="top.png" id="top">
+<img src="bottom.png" id="bottom">
+<b><div id="name" contenteditable class="info" style="left:17%;top:0px">Nom</div></b>
+<div id="name" contenteditable class="info" style="left:17%;top:45px%;font-size :10px">Numéro</div></b>
+<button onclick="location.reload()" class="info" style="left:70%;top:4%;border:none;background:none;color:#76B20E">r</button>
+<button onclick="envoi()" class="info" style="left:82%;top:91%;z-index:3;border:none;background:none;"><img src="gris.png" id="fleche" style="width:45px;height:45px"></button>
+<button class="info" style="left:56%;top:4%;z-index:3;border:none;background:none;color:#76B20E" onclick='alert("lol")'>A</button>
+<script>
+function lol()
+{
+if (document.awn.awn.value!="")
+{
+document.getElementById("fleche").src = "vert.png"
+}
+else
+{
+document.getElementById("fleche").src = "gris.png"
+}
+}
+</script>
+<form name="awn" class="info" style="left:14%;top:92%;">
+<input name="awn" placeholder="Entrez le message texte" style="border:none;font-size:20px" onkeyup="lol()">
+</form>
+</body>
+</html>
