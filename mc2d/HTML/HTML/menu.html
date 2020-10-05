@@ -1,0 +1,59 @@
+<script src="userData/options.txt"></script>
+<body onload='panorama();document.cookie="ingame=0"' >
+<div id="font" style="width:100%;height:100%;position:absolute;left:0;top:0;">
+<script>
+if(document.cookie=="")
+{
+document.cookie = "reup=1"
+document.cookie = "creative=0"
+for (i=1;i<19;i++){
+document.cookie= "inv"+i+"=-1"
+document.cookie= "invcraft"+i+"=-1"
+document.cookie= "qtt"+i+"=0"
+document.cookie= "qttc"+i+"=0"
+//alert(i)
+}
+document.cookie= "invchoice=1"
+document.cookie= "invcraftchoice=1"
+document.cookie = "rd3=32"
+document.cookie = "pano="+Math.round(Math.random() *6)
+document.cookie = "savecode=NaN"
+document.cookie = "xa=5"
+document.cookie = "ya=5"
+document.cookie = "x=5"
+document.cookie = "y=5"
+}
+//alert(document.cookie)
+
+function panorama(){
+//alert(document.getElementById("font").style)
+document.getElementById("font").style.background = "url('mc_img\/utilities\/panorama\/panorama_"+actualpano+".png')"
+}
+</script>
+
+<style>
+     .case
+     {
+     border:3px solid black;
+     font-size:15;
+     background: gray;
+     width:100%;
+     }
+    .container
+     {
+     border:3px solid;
+     font-size:15;
+     background: gray;
+     padding:1%
+     }
+</style>
+<br><br>
+<img id="title" src="mc_img/utilities/title.png" style="width:96%;height:15%;padding : 0 2%">
+<br><br><br><br><br><br>
+<div class="container">
+<button onclick="location.href = 'worldchoice.html'" class="case">Jouer</button>
+<button onclick="location.href = 'options.html'" class="case">Options</button>
+<!--<button onclick="location.href = 'mc_fichiers\/'" class="case">Installer l'éditeur de texte</button>-->
+</div>
+</div>
+</body>

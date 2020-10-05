@@ -1,0 +1,140 @@
+<script src="userData/options.txt"></script>
+<script src="mc_fichiers/graine.js"></script>
+<script>
+
+function sauvegarder()
+{
+savecode = "terrain ="+JSON.stringify(terrain)
+savecode += ";x="+document.cookie.split("x=")[1].split(";")[0]
+savecode += ";y="+document.cookie.split("y=")[1].split(";")[0]
+savecode += ";xa="+document.cookie.split("xa=")[1].split(";")[0]
+savecode += ";ya="+document.cookie.split("ya=")[1].split(";")[0]
+for(i=1;i<19;i++)
+{
+savecode += ";inv"+i+"="+document.cookie.split("inv"+i+"=")[1].split(";")[0]
+savecode += ";qtt"+i+"="+document.cookie.split("qtt"+i+"=")[1].split(";")[0]
+}
+savecode += ";invchoice="+document.cookie.split("invchoice=")[1].split(";")[0]
+for(i=0;i<terrain.length;i++){
+for(p=0;p<terrain[i].length;p++){
+if(terrain[i][p]==14)
+{
+//cook = document.cookie.split("chest["+i+"]["+p+"]=")[1].split(";")[0]?document.cookie.split("chest["+i+"]["+p+"]=")[1].split(";")[0]:-1
+cook=-1
+savecode += ";chest["+i+"]["+p+"]="+cook
+}}}
+document.cookie = "savecode="+savecode
+//prompt("Code :" , savecode)
+}
+
+//alert(document.cookie)
+function actualise(name,value)
+{
+document.getElementById(name).innerHTML = value
+}
+
+function actualiseinput(name,value)
+{
+name.value = value
+}
+
+setTimeout("getValues()",10)
+function getValues()
+{
+actualise("render",actualrd)
+actualiseinput(document.options.pano,actualpano)
+document.options.render.value = actualrd/2
+}
+
+function actualisecookies()
+{
+document.cookie = "rd3="+ document.options.render.value*2
+document.cookie = "pano="+ document.options.pano.value
+//alert(document.cookie)
+window.location.href = "menu.html"
+}
+</script>
+<style>
+     .case
+     {
+     border:3px solid gray;
+     font-size:15;
+     background: gray;
+     width:100%;
+     }
+    .container
+     {
+     border:3px solid black;
+     font-size:15;
+     background: gray;
+     padding:1%
+     }
+     form
+     {
+     border:3px solid black;
+     font-size:15;
+     background: gray;
+     width:98%;
+     }
+</style>
+<body onload='panorama()'  style="text-align:center">
+<div id="font" style="width:100%;height:100%;position:absolute;left:0;top:0;">
+<script>
+function panorama(){
+//alert(document.getElementById("font").style)
+document.getElementById("font").style.background = "url('mc_img\/utilities\/panorama\/panorama_"+actualpano+".png')"
+}
+
+function directpanorama()
+{
+document.getElementById("font").style.background = "url('mc_img\/utilities\/panorama\/panorama_"+document.options.pano.value+".png')"
+}
+</script>
+
+<br><br><br><br><br><br><br>
+<form name="options" text-align:center>
+<br><br>
+<table class="container">
+<td>
+<div>Render Distance :</div></td>
+<td><div class="case"></td>
+<td><input name="render" type="range" min="8" max="32" value="" onload='this.value=actualrd' onchange="hello = this.value*2;actualise('render',hello)">
+</td>
+<td>
+<div id="render" class="case"></div>
+</td>
+</div>
+</table>
+<br>
+<table class="container" style="visibility:hidden">
+<td>
+<div>Panorama n°:</div></td>
+<td>
+<div class="case">
+<input name="pano" type="number" min="0" max="6" value="" onload='this.value=actualpano' onchange="if(this.value>6||this.value<0){this.value = Math.round(Math.random() * 6)};directpanorama()">
+</td>
+</table>
+<br>
+<table>
+<td>
+<div>Mode Créatif</div></td>
+</td>
+<td>
+<div class="case">
+<td>
+<input name="crea" type="checkbox" onchange="creamod=this.checked==true?1:0;document.cookie='creative='+creamod;document.cookie='tmp=0';">
+<script>lolp=parseInt(document.cookie.split("creative=")[1].split(";")[0])?true:false;document.options.crea.checked=lolp</script>
+</td>
+<td>
+<div id="render" class="case"></div>
+</td>
+</div>
+</table>
+<!--<button onclick="prompt('Code : ','graine['+graine.length+']'+document.cookie.split('savecode=terrain')[1]);actualisecookies();" class="container">Convertir le monde en graine</button>
+<button onclick="sauvegarder()" class="container">Sauvegarder le code</button>-->
+<br><br>
+<br><br>
+<button onclick="actualisecookies();history.back(-1)" class="container">Retour</button>
+</form>
+</div>
+</body>

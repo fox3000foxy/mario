@@ -1,0 +1,5 @@
+//Pour rajouter un texture pack :
+//texturepackinclude("{texturepack name}")
+
+//Exemples
+//texturepackinclude("Yohan")

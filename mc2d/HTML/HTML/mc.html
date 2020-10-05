@@ -1,0 +1,209 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<title>MC : Code</title>
+<script async="" src="mc_fichiers/defineblocks.js"></script>
+<script async="" src="mc_fichiers/terrain.js"></script>
+<script>
+//alert(location.href)
+//alert(document.cookie)
+//if(location.href.split("level=")[1]==undefined) {document.write('<script src="mc_fichiers\/terrain.js"><\/script>')}
+if(location.href.indexOf("lc=true")!=-1) {code = document.cookie.split("savecode=")[1].split(";")[0];document.write('<script>'+code+'<\/script>'); document.cookie= "reup=1"}
+//else if(location.href.indexOf("seed=")!=-1) {code = location.href.split("seed=")[1];document.write('<script>terrain =graine[code]<\/script>'); document.cookie= "reup=1"}
+else if(location.href.split("level=")[1]){document.write('<script src="games\/'+location.href.split("level=")[1]+'"><\/script>')}
+else {document.write('<script src="mc_fichiers\/terrain.js"><\/script>')}
+</script>
+<link rel="stylesheet" href="mc_fichiers/style.css">
+<link rel="stylesheet" href="mc_fichiers/style2.css">
+<script>
+//alert(terrain)
+/*if(document.cookie.indexOf("x=")==-1)
+{
+document.cookie = "x="+2
+document.cookie = "y="+11
+}*/
+cook = document.cookie
+x=cook.split("x=")[1].split(";")[0]
+y=cook.split("y=")[1].split(";")[0]
+//document.cookie = "x="+8
+//alert(document.cookie)
+x1=x-1
+x2=x-(-1)
+y1=y-1
+y2=y-(-1)
+
+//alert(x)
+//alert(y)
+//alert(terrain[x][y])
+
+       //alert("Bienvenue sur Minecraft : Code your world")
+      function gauche() {if(terrain[x1][y]==0){ document.cookie = "x="+ x1;location.reload()}}
+      function droite() {if(terrain[x2][y]==0){ document.cookie = "x="+ x2;location.reload()}}
+      function haut() {if(terrain[x][y1]==0){ document.cookie = "y="+ y1;location.reload()}}
+      function bas() {if(terrain[x][y2]==0){ document.cookie = "y="+ y2;location.reload()}}
+
+
+      var historique = new Array()
+      i=0
+      historique[0] = ""
+      function ajout(param)
+      {
+        if(document.getElementById("codezone").innerHTML!=""){
+          document.getElementById("codezone").innerHTML += unescape("%0D%0A")+param
+          i++
+          historique[i] = document.getElementById("codezone").innerHTML
+         }
+        else{
+          document.getElementById("codezone").innerHTML = param
+          i++
+          historique[i] = document.getElementById("codezone").innerHTML
+          go()
+         }
+      }
+      function annuler()
+      {
+      if(i!=0)
+      {
+      i--
+      document.getElementById("codezone").innerHTML = historique[i]
+      }
+      }
+      function revenir()
+      {
+      if(i!=historique.length-1)
+      {
+      i++
+      document.getElementById("codezone").innerHTML = historique[i]
+      }
+      }
+      function go(){
+      tolkien = document.getElementById("codezone").innerHTML.split(unescape("%0D%0A"))
+      //document.write(tolken)
+      for (n=0;n<=tolkien.length;n++)
+      {
+      try{
+      if (tolkien[n]=="avancer()") {avancer()}
+      if (tolkien[n]=="orienter('gauche')") {orienter("gauche")}
+      if (tolkien[n]=="orienter('droite')") {orienter("droite")}
+      if (tolkien[n]=="reculer()") {reculer()}
+      if (tolkien[n]=="sauter()") {sauter()}
+      if (tolkien[n]=="accroupir()") {accroupir()}
+}
+catch(e)
+{
+alert(e)
+}
+      }
+     //document.cookie="agentmove="+"1"
+     document.getElementById("codezone").innerHTMLinnerHTML = ""
+      }
+
+      function orienter(direction)
+      {
+       if (direction=="gauche") i=0
+       if (direction=="droite") i=180
+       document.cookie = "rota="+i
+       location.reload()
+      }
+      
+if(document.cookie.indexOf("xa=")==-1)
+{
+document.cookie = "xa="+2
+document.cookie = "ya="+11
+document.cookie = "rota="+0
+}
+cook = document.cookie
+xa=cook.split("xa=")[1].split(";")[0]
+ya=cook.split("ya=")[1].split(";")[0]
+//rot=cook.split("rota=")[1].split(";")[0]
+
+//document.cookie = "xa="+8
+//alert(document.cookie)
+xa1=xa-1
+xa2=xa-(-1)
+ya1=ya-1
+ya2=ya-(-1)
+
+      function avancer()
+      {
+  //     if (en_sautant){document.cookie = "ya="+ ya1;location.reload()}}
+       if (rot==0&&xa!=0){document.cookie = "xa="+ xa1;location.reload()}
+       if (rot==180&&xa!=terrain[0].length){document.cookie = "xa="+ xa2;location.reload()}
+     }
+function reculer()
+      {
+  //     if (en_sautant){document.cookie = "ya="+ ya1;location.reload()}}
+       if (rot==180&&xa!=0){document.cookie = "xa="+ xa1;location.reload()}
+       if (rot==0&&xa!=terrain[0].lenght){document.cookie = "xa="+ xa2;location.reload()}
+     }
+
+function sauter()
+      {
+  //     if (en_sautant){document.cookie = "ya="+ ya2;location.reload()}}
+       if (ya!=0){document.cookie = "ya="+ ya1;location.reload()}
+       }
+
+function accroupir()
+      {
+  //     if (en_sautant){document.cookie = "ya="+ ya1;location.reload()}}
+       if (ya!=0){document.cookie = "ya="+ ya2;location.reload()}
+       }
+
+
+
+      function effacer()
+      {
+        i++
+        document.getElementById("codezone").innerHTML = ""
+        historique[i] = document.getElementById("codezone").innerHTML
+      }
+//alert(location.href)
+//alert(document.cookie)
+</script>
+</head>
+  <script>
+  setInterval('if(document.cookie.split("ingame=")[1].split(";")[0]=="1"||document.cookie.split("ingame=")[1]=="1"){document.getElementById("cache").style.visibility = "hidden"}else{document.getElementById("cache").style.visibility = "visible"}',500)
+  </script>
+  <body>
+    <div id="cache" class="borders" style="left:0;top:0;z-index:1;width:100%;height:100%;align:center;text-align: center">Cette fonction n'est pas disponible hors-jeu !</div>
+    <div class="borders" style="left:0;top:0;width:100%;height:100%"></div>
+<!--    <div class="borders" style="left:0;top:0;width:320px;height:50px"></div>
+    <div class="borders" style="left:0;top:0;width:320px;height:50px"></div>
+    <div class="borders" style="left:0;top:50px;width:240px;height:295px"></div>
+    <div class="borders" style="left:140px;top:50px;width:180px;height:295px"></div>
+    <div class="borders" style="left:0;top:160px;width:320px;height:385px"></div>-->
+    <div style="postion : absolute;left:45%;top:45%">
+    <button class="controls" style="left:30px;//top:0px;" onclick="gauche()">◄</button>
+    <button class="controls" style="left:70px;top:170px;" onclick="haut()">▲</button>
+    <button class="controls" style="left:110px;//top:0px;" onclick="droite()">►</button>
+    <button class="controls" style="left:70px;//top:0px;" onclick="bas()">▼</button>
+    <!--""-->
+    </div>
+    <textarea id="codezone" disabled style="visibility:hidden"></textarea>
+<!--  Agent:  <button class="functions" onclick="ajout(this.innerHTML)">avancer()</button>
+    <button class="functions" style="top:280px" onclick="ajout(this.innerHTML)">reculer()</button>
+    <button class="functions" style="top:310px" onclick="ajout(this.innerHTML)">sauter()</button>
+    <button class="functions" style="top:340px" onclick="ajout(this.innerHTML)">accroupir()</button>
+    <button class="functions" style="top:370px" onclick="ajout(this.innerHTML)">orienter('gauche')</button>
+    <button class="functions" style="top:400px" onclick="ajout(this.innerHTML)">orienter('droite')</button>
+    <button id="go" onclick="go()" style="visibility:hidden">GO !</button>
+<button class="functions" id="undo" onclick="annuler()">&#x27F2; Annuler</button>
+    <button class="functions" id="redo" onclick="revenir()">&#x27F3; Revenir</button>
+    <button class="functions" id="effacer" onclick="effacer()">Effacer</button>
+
+<button class="functions" id="undo" onclick="verif()">Ouvrir</button>
+<button class= "functions" id="redo" onclick="document.cookie= 'reup=1';location.href='mc.html?lc=true'" class="case">Reprendre</button>
+--><script>
+function verif()
+{
+//document.write('<script>if(document.cookie.split("agentmove=")[1].split(";")[0]=="1"){document.cookie="agentmove="+"0";alert("L\'agent se dÃ©place !");location.reload();}<\/script>')
+document.cookie= "reup=1"
+var evt = document.createEvent("MouseEvents");
+evt.initMouseEvent("click", true, true, window,0, 0, 0, 0, 0, false, false, false, false, 0, null);
+document.getElementById("file").dispatchEvent(evt);
+}
+</script>
+<!--<form name="levelchange" action="mc.html">
+<input name="level" id="file" type="file" onchange="document.levelchange.submit()">-->
+</form>
+</body>

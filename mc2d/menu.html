@@ -1,0 +1,62 @@
+<html>
+<head>
+<style>
+.iframe
+{
+position:absolute;
+top:8%;
+width:100%;
+height:92%;
+left:0px;
+}
+
+#menubar
+{
+position:absolute;
+top:0px;
+left:0px;
+width:100%;
+height:8%;
+text-align:center;
+}
+
+vtd
+{
+border: 3px solid black;
+}
+</style>
+<script>
+function action1()
+{
+document.getElementById("1").style.visibility = "visible"
+document.getElementById("2").style.visibility = "hidden"
+document.getElementById("3").style.visibility = "hidden"
+}
+function action2()
+{
+document.getElementById("1").style.visibility = "hidden"
+document.getElementById("2").style.visibility = "visible"
+document.getElementById("3").style.visibility = "hidden"
+}
+function action3()
+{
+document.getElementById("1").style.visibility = "hidden"
+document.getElementById("2").style.visibility = "hidden"
+document.getElementById("3").style.visibility = "visible"
+}
+
+</script>
+</head>
+<body>
+<table id="menubar">
+<tr>
+<td onclick="action1()">Controles</td>
+<td onclick="action2()">Map</td>
+<td onclick="action3()">Inventaire</td>
+</tr>
+</table>
+<iframe frameborder=0 class="iframe" id="1" src="main.html"></iframe>
+<iframe frameborder=0 class="iframe" id="2" src="main2.html"></iframe>
+<iframe frameborder=0 class="iframe" id="3" src="main3.html"></iframe>
+</body>
+</html>

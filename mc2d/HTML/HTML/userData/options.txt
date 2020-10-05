@@ -1,0 +1,9 @@
+//alert(document.cookie)
+tmpkk = document.cookie.split("rd3=")[1].split(";")[0]
+actualrd=parseInt(tmpkk)
+
+pano = document.cookie.split("pano=")[1]
+if(pano.split(";")[0]!=undefined){pano=pano.split(";")[0]}
+actualpano = parseInt(pano)
+
+levels = ["Lucas","Yohan","Salut","Test"]

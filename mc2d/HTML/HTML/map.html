@@ -1,0 +1,384 @@
+<html>
+<head>
+<link rel="stylesheet" href="mc_fichiers/switch.css">
+<img src="player.jpg" style="position:absolute;z-index:10" name="playerf" onclick="traffic()">
+<meta charset="UTF-8">
+<span style="postion:absolute;z-index:-1">Chargement...</span>
+<form name="charge">
+<progress min=0 max=100 name="charge"></progress>
+</form>
+<script src="mc_fichiers/defineblocks.js"></script>
+<script src="mc_fichiers/defineimages.js"></script>
+<script src="userData/options.txt"></script>
+<script src="mc_fichiers/modinclude.js"></script>
+<script src="mc_fichiers/texturepackinclude.js"></script>
+<script src="mc_fichiers/graine.js"></script>
+<script src="userData/texture-pack.txt"></script>
+<script src="userData/mod.txt"></script>
+<script src="mc_fichiers/crafts.js"></script>
+<script src="userData/craft.txt"></script>
+<script src="mc_fichiers/definecrafts.js"></script>
+
+<script>
+//alert(location.href)
+//alert(document.cookie)
+//if(location.href.split("level=")[1]==undefined) {document.write('<script src="mc_fichiers\/terrain.js"><\/script>')}
+if(location.href.indexOf("lc=true")!=-1) {code = document.cookie.split("savecode=")[1].split(";")[0];document.write('<script>'+code+'<\/script>'); document.cookie= "reup=1"}
+else if(location.href.indexOf("seed=")!=-1) {code = location.href.split("seed=")[1];document.write('<script src="mc_fichiers\/seeds\/'+code+'"><\/script><script src="mc_fichiers\/defaultinv.js"><\/script><script>reup()<\/script>'); document.cookie= "reup=1"}
+else if(location.href.split("level=")[1]){document.write('<script src="games\/'+location.href.split("level=")[1]+'"><\/script>')}
+else if(location.href.split("resizable=")[1]){document.write('<script>newresizablemap()<\/script>')}
+else {document.write('<script src="mc_fichiers\/terrain.js"><\/script>')}
+
+function newresizablemap()
+{
+l = document.cookie.split("longueur=")[1]
+h = document.cookie.split("hauteur=")[1].split(";")[0]
+if (l.indexOf(";")!=-1) {l.split(";")[0]}
+h = parseInt(h)
+l = parseInt(l)
+terrain = new Array()
+for (i=0;i<h;i++)
+{
+terrain[i] = new Array()
+//alert("lol")
+for (p=0;p<l;p++)
+{
+//alert("l)
+terrain[i][p] = 0
+
+if (h-4==i) {terrain[i][p] = 2}
+if (h-3==i) {terrain[i][p] = 3}
+if (h-2==i) {terrain[i][p] = 3}
+if (h-1==i) {terrain[i][p] = 4}
+//alert(terrain[i][p])
+}
+}
+}
+</script>
+<script src="mc_fichiers/toblock.js"></script>
+<script src="mc_fichiers/toimages.js"></script>
+<script src="mc_fichiers/defaultinv.js"></script>
+<img src="mc_img/icons/_pick2.png" style="width:32px;height:32px;position:fixed;left:10;top:10;z-index:2">
+<img name="buildblock" style="width:32px;height:32px;position:fixed;left:120;top:10;z-index:2">
+<label class="switch" style="position:fixed;left:50;top:10;z-index:2">
+  <input id="mode" type="checkbox" onclick='mode = document.getElementById("mode").checked==true&&item!=-1?1:0;veriflol()'>
+  <span class="slider round"></span>
+</label>
+</head>
+<body bgColor="black" onload='buildblocksrc();terrainold=terrain.toString();document.cookie = "ingame=1"' onunload='document.cookie = "ingame=0"'>
+<script>
+function veriflol()
+{
+if(item==-1) document.getElementById("mode").checked = false
+}
+//document.cookie = "terrain=kk"
+document.cookie = "pano="+Math.round(Math.random() *6)
+
+//alert(document.cookie)
+function quit()
+{
+//if(terrain!=terrainold){if(confirm('Continuer ? Votre sauvegarde sera perdu !')==1){return true}}
+return true
+}
+setInterval("buildblocksrc()",100)
+buildblocksrc()
+function buildblocksrc()
+{
+item = document.cookie.split("inv"+document.cookie.split("invchoice=")[1].split(";")[0]+"=")[1].split(";")[0]
+document.buildblock.src = "mc_img/"+toimages(item)
+//alert(item)
+if(item=="6")  document.buildblock.src = "mc_img/"+tospecialimages(item,1)
+}
+//alert(document.cookie)
+//alert(document.cookie.split("reup=")[1])
+function item()
+{
+item = document.cookie.split("inv"+document.cookie.split("invchoice=")[1].split(";")[0]+"=")[1].split(";")[0]
+}
+
+//setInterval("item()"i0)
+if(document.cookie.split("reup=")[1].split(";")[0]== 1 || document.cookie.split("reup=")[1].split(";")[0] == "1"|| location.href.indexOf("seed=")!=-1)
+{
+reup()
+}
+function reup()
+{
+
+document.cookie = "craft=0"
+document.cookie= "x="+xp
+document.cookie= "y="+yp
+//document.cookie= "xa="+xa
+//document.cookie= "ya="+ya*
+document.cookie= "inv1="+inv1
+document.cookie= "inv2="+inv2
+document.cookie= "inv3="+inv3
+document.cookie= "inv4="+inv4
+document.cookie= "inv5="+inv5
+document.cookie= "inv6="+inv6
+document.cookie= "inv7="+inv7
+document.cookie= "inv8="+inv8
+document.cookie= "inv9="+inv9
+document.cookie= "inv10="+inv10
+document.cookie= "inv11="+inv11
+document.cookie= "inv12="+inv12
+document.cookie= "inv13="+inv13
+document.cookie= "inv14="+inv14
+document.cookie= "inv15="+inv15
+document.cookie= "inv16="+inv16
+document.cookie= "inv17="+inv17
+document.cookie= "inv18="+inv18
+document.cookie= "invcraft1="+invcraft1
+document.cookie= "invcraft2="+invcraft2
+document.cookie= "invcraft3="+invcraft3
+document.cookie= "invcraft4="+invcraft4
+document.cookie= "invcraft5="+invcraft5
+document.cookie= "invcraft6="+invcraft6
+document.cookie= "invcraft7="+invcraft7
+document.cookie= "invcraft8="+invcraft8
+document.cookie= "invcraft9="+invcraft9
+document.cookie= "invcraft10="+invcraft10
+document.cookie= "qttc1="+qttc1
+document.cookie= "qttc2="+qttc2
+document.cookie= "qttc3="+qttc3
+document.cookie= "qttc4="+qttc4
+document.cookie= "qttc5="+qttc5
+document.cookie= "qttc6="+qttc6
+document.cookie= "qttc7="+qttc7
+document.cookie= "qttc8="+qttc8
+document.cookie= "qttc9="+qttc9
+document.cookie= "qtt1="+qtt1
+document.cookie= "qtt2="+qtt2
+document.cookie= "qtt3="+qtt3
+document.cookie= "qtt4="+qtt4
+document.cookie= "qtt5="+qtt5
+document.cookie= "qtt6="+qtt6
+document.cookie= "qtt7="+qtt7
+document.cookie= "qtt8="+qtt8
+document.cookie= "qtt9="+qtt9
+document.cookie= "qtt10="+qtt10
+document.cookie= "qtt11="+qtt11
+document.cookie= "qtt12="+qtt12
+document.cookie= "qtt13="+qtt13
+document.cookie= "qtt14="+qtt14
+document.cookie= "qtt15="+qtt15
+document.cookie= "qtt16="+qtt16
+document.cookie= "qtt17="+qtt17
+document.cookie= "qtt18="+qtt18
+document.cookie= "res="+res
+document.cookie= "qttres="+res
+document.cookie= "invchoice="+invchoice
+//alert(terrain)
+
+//alert(document.cookie)
+}
+document.cookie= "reup="+0
+</script>
+<script>
+//terraincok = new Array() 
+//alert(document.cookie.split("terrain=")[1])
+//terraincok = JSON.parse(document.cookie.split("terrain=")[1])
+charge=0
+
+sunx= new Date().getHours()%12+1
+suny=5
+sunmoon = new Date().getHours()>8&&new Date().getHours()<20?"sun.png":"moon.png"
+
+
+for(i=0;i<terrain.length;i++){
+for(p=0;p<terrain[i].length;p++){
+savebackup()
+//res = 32
+res = actualrd
+imgsrc = "mc_img/"
+aircolor = sunmoon=="sun.png"?images[-1][0]:images[-1][1]
+air = imgsrc+aircolor
+psrc = "player.jpg"
+voidi = imgsrc+images[0]
+water = imgsrc+images[6][0]
+slab = imgsrc+"woodenslab"
+mode=0
+//alert(block.length)
+
+//setInterval("item()",500)
+//item = hhhh
+//item = document.cookie.split("inv"+document.cookie.split("invchoice=")[1].split(";")[0]+"=")[1].split(";")[0]
+
+//alert(item)
+//alert(block)
+//alert(block.indexOf(block[item]))
+
+/*for(i=0;i<10000;i++)
+{
+loo =document.agent
+}*/
+qtt = new Array()
+qtt[0] = null
+function ik()
+{
+traffic()
+for (i=1;i<19;i++){qtt[i] = parseInt(document.cookie.split("qtt"+i+"=")[1].split(";")[0])}
+iy = qtt[ document.cookie.split("invchoice=")[1].split(";")[0] ] -1
+document.cookie = "qtt"+document.cookie.split("invchoice=")[1].split(";")[0]+"="+iy
+//alert(document.cookie)
+if(iy<=0){document.cookie = "inv"+document.cookie.split("invchoice=")[1].split(";")[0]+"=-1"
+item=-1
+mode=0
+document.getElementById("mode").checked = false
+document.buildblock.src = "mc_img/void.png"
+}
+}
+
+function recup()
+{
+traffic()
+for (i=1;i<19;i++){qtt[i] = parseInt(document.cookie.split("qtt"+i+"=")[1].split(";")[0])}
+iy = qtt[ document.cookie.split("invchoice=")[1].split(";")[0] ] +1
+if(iy==0){document.cookie = "qtt"+document.cookie.split("invchoice=")[1].split(";")[0]+"="+(iy-1)}else{document.cookie = "qtt"+document.cookie.split("invchoice=")[1].split(";")[0]+"="+iy}
+}
+
+function mine(terraini)
+{
+traffic()
+recherche=1
+loic = item
+item = -1
+for (i=1;i<19;i++){qtt[i] = parseInt(document.cookie.split("qtt"+i+"=")[1].split(";")[0])}
+iy = qtt[ document.cookie.split("invchoice=")[1].split(";")[0]]
+for (i=1;i<19;i++){if(document.cookie.split("inv"+i+"=")[1].split(";")[0]==terraini&&recherche==1/*&&document.cookie.split("qtt"+i+"=")[1].split(";")[0]<64*/){/*alert(terraini);*/slotcorresp=i;recherche=0;}}
+for (i=1;i<19;i++){if(document.cookie.split("inv"+i+"=")[1].split(";")[0]==-1&&recherche==1){slotcorresp=i;recherche=0;newcase=1}}
+//alert(slotcorresp)
+item=loic
+//dup = item==-1?1:0
+dup = 0
+document.cookie = "inv"+slotcorresp+"="+terraini
+coun = parseInt(qtt[slotcorresp]+1)
+document.cookie = "qtt"+slotcorresp+"="+coun
+//alert(document.cookie)
+}
+function positionsplayer()
+{
+document.playerf.style.width = res
+document.playerf.style.height = res
+document.playerf.style.top = document.cookie.split("y=")[1].split(";")[0]*res
+document.playerf.style.left = document.cookie.split("x=")[1].split(";")[0]*res
+}
+
+//setInterval("positionsplayer()",750)
+document.write('<img src="'+air+'" style="position:absolute;left:'+p*res+'px;top:'+i*res+'px;width:'+res+'px ;height:'+res+'px" alert="this.src">')
+why = "because"
+
+function cookcraft()
+{
+document.cookie = "craft=1";
+document.cookie = "minicrft=1";
+document.cookie = "tmp";
+recup()
+}
+
+function furncraft()
+{
+document.cookie = "furn=1";
+document.cookie = "tmp";
+recup()
+}
+function blocklol()
+{
+//document.write('<img src="mc_img\/'+playerpos+'" alt="'+terrain[i][p]+'" onclick="if(terrain['+i+']['+p+']!=0){recup()};if(this.src.indexOf(psrc)==-1&&this.src.indexOf(water)==-1&&mode==0){mine(terrain['+i+']['+p+']);this.src=air;terrain['+i+']['+p+']=0;sauvegarder(0)}else if(this.src.indexOf(air)!=-1||this.src.indexOf(voidi)!=-1&&mode==1&&item!=6&&item!=7&&block.indexOf(block[item])!=-1&&item!=-1){this.src=imgsrc+toimages('+item+');terrain['+i+']['+p+']='+item+';sauvegarder(0);ik()}else if(this.src.indexOf(voidi)!=-1||this.src.indexOf(air)!=-1&&mode==1&&item==6&&item!=-1){this.src = imgsrc+tospecialimages('+item+',0);terrain['+i+']['+p+']='+item+';sauvegarder(0);ik()}else if(this.src.indexOf(slab)!=1&&mode==1&&item!=-1){ if(item==14||item==15){this.src= imgsrc+toimages(8);terrain['+i+']['+p+']=8;sauvegarder(0);ik()}else if(item==19||item==20){this.src= imgsrc+toimages(16);terrain['+i+']['+p+']=16;ik()}else if(item==32||item==33){this.src= imgsrc+toimages(9);terrain['+i+']['+p+']=9};sauvegarder(0);ik()}else if(this.src.indexOf(psrc)!=-1){traffic()}" style="position:absolute;left:'+p*res+'px;top:'+i*res+'px;width:'+res+'px ;height:'+res+'px">')
+document.write('<img src="mc_img\/'+playerpos+'" alt="'+terrain[i][p]+'" onclick="if(terrain['+i+']['+p+']==40&&mode==1){cookcraft()};if(terrain['+i+']['+p+']==41&&mode==1){cookfurn()};if(terrain['+i+']['+p+']!=0){};if(this.src.indexOf(water)==-1&&mode==0){mine(terrain['+i+']['+p+']);this.src=air;terrain['+i+']['+p+']=0;sauvegarder(0)}else if(terrain['+i+']['+p+']==6&&mode==1&&item==7){this.src=air; terrain['+i+']['+p+']=0;sauvegarder(0);ik()}else if(this.src.indexOf(air)!=-1||this.src.indexOf(voidi)!=-1&&mode==1&&item!=6&&item!=7&&block.indexOf(block[item])!=-1&&item!=-1){this.src=imgsrc+toimages(item);terrain['+i+']['+p+']=parseInt(item);sauvegarder(0);ik()}else if(this.src.indexOf(voidi)!=-1||this.src.indexOf(air)!=-1&&mode==1&&item==6&&item!=-1){this.src = imgsrc+tospecialimages(item,0);terrain['+i+']['+p+']=parseInt(item);sauvegarder(0);ik()}else if(this.src.indexOf(slab)!=1&&mode==1&&item!=-1){ if(item==14||item==15){this.src= imgsrc+toimages(8);terrain['+i+']['+p+']=8;sauvegarder(0);ik()}else if(item==19||item==20){this.src= imgsrc+toimages(16);terrain['+i+']['+p+']=16;ik()}else if(item==32||item==33){this.src= imgsrc+toimages(9);terrain['+i+']['+p+']=9};sauvegarder(0);ik()};" style="position:absolute;z-index:1;left:'+p*res+'px;top:'+i*res+'px;width:'+res+'px ;height:'+res+'px">')
+}
+blocklol()
+//Agent
+//if(i==document.cookie.split("ya=")[1].split(";")[0]&&p == document.cookie.split("xa=")[1].split(";")[0]) document.write('<img src="mc_img\/'+agentpos+'" name="agent" onclick="if(quit()==1)location.reload()" style="position:absolute;left:'+p*res+'px;top:'+i*res+'px;width:'+res+'px ;height:'+res+'px">')
+//if(terrain[i][p]==6) document.write('<img src="mc_img\/'+waterpos+'" onclick="if(this.src.indexOf(water)!=-1&&mode==1&&item==7){this.src=air; terrain['+i+']['+p+']=0}" style="position:absolute;left:'+p*res+'px;top:'+i*res+'px;width:'+res+'px ;height:'+res+'px">')
+}
+}
+
+//alert(sunmoon)
+if(terrain[suny][sunx]==0) {document.write('<img src="mc_img\/utilities\/'+sunmoon+'" style="position:fixed;left:'+sunx*res+';top:'+suny*res+';width:'+res+';height:'+res+'">')}
+//for(i=0;i<terrain[0].length;i++){if(terrain[suny+1][i]==0) {document.write('<img src="mc_img\/utilities\/cloud.png" style="position:absolute;left:'+i*res+';top:'+(suny+1)*res+';width:'+res+';height:'+res+'">')}
+
+document.write('<button style="position:fixed;top:60;left:10;z-index:2;width:150px" onclick="sauvegarder(1)">Sauvegarder le code<\/button>')
+//document.write('<button style="position:absolute;top:90;left:10;z-index:2;width:150px" onclick="if(quit()==1)verif()">Ouvrir<\/button>')
+//document.write('<button style="position:absolute;top:90;left:10;z-index:2;width:150px" onclick="if(quit()==1)newmap()">Nouveau<\/button>')
+lc = "map.html?lc=true"
+//document.write('<button style="position:absolute;top:90;left:10;z-index:2;width:150px" onclick="sauvegarder(0);location.href=lc">Actualiser<\/button>')
+menu = "menu.html"
+document.write('<button style="position:fixed;top:90;left:10;z-index:2;width:150px" onclick="try{sauvegarder(0)}catch(e){alert(e)};location.href=menu">Quitter<\/button>')
+
+//setInterval('document.charge.charge.value += 1')
+
+function newmap()
+{
+document.cookie= "reup=1"
+window.location.href = "map.html"
+}
+
+if(document.cookie=="")
+{
+newmap()
+}
+
+function sauvegarder(o)
+{
+savecode = "terrain ="+JSON.stringify(terrain)
+savecode += ";xp="+document.cookie.split("x=")[1].split(";")[0]
+savecode += ";yp="+document.cookie.split("y=")[1].split(";")[0]
+// savecode += ";xa="+document.cookie.split("xa=")[1].split(";")[0]
+// savecode += ";ya="+document.cookie.split("ya=")[1].split(";")[0]
+for(i=1;i<19;i++)
+{
+savecode += ";inv"+i+"="+document.cookie.split("inv"+i+"=")[1].split(";")[0]
+savecode += ";qtt"+i+"="+document.cookie.split("qtt"+i+"=")[1].split(";")[0]
+savecode += ";invcraft"+i+"="+document.cookie.split("invcraft"+i+"=")[1].split(";")[0]
+savecode += ";qttc"+i+"="+document.cookie.split("qttc"+i+"=")[1].split(";")[0]
+}
+//savecode += ";res="+document.cookie.split("res=")[1].split(";")[0]
+//savecode += ";qttres="+document.cookie.split("qttres=")[1].split(";")[0]
+savecode += ";invchoice="+document.cookie.split("invchoice=")[1].split(";")[0]
+for(i=0;i<terrain.length;i++){
+for(p=0;p<terrain[i].length;p++){
+if(terrain[i][p]==14)
+{
+//cook = document.cookie.split("chest["+i+"]["+p+"]=")[1].split(";")[0]?document.cookie.split("chest["+i+"]["+p+"]=")[1].split(";")[0]:-1
+cook=-1
+savecode += ";chest["+i+"]["+p+"]="+cook
+}
+}}
+document.cookie = "savecode="+savecode
+if(o==1) prompt("Code :" , savecode)
+}
+
+//document.cookie="rd=32"
+
+function traffic()
+{
+positionsplayer()
+}
+
+function savebackup()
+{
+//playerpos = i==document.cookie.split("y=")[1].split(";")[0]&&p == document.cookie.split("x=")[1].split(";")[0]?"../player.jpg":toimages(terrain[i][p])
+playerpos = images[terrain[i][p]].length==2?tospecialimages(terrain[i][p],0):toimages(terrain[i][p])
+//alert(terraincok[i][p])
+agentpos = i==document.cookie.split("ya=")[1].split(";")[0]&&p == document.cookie.split("xa=")[1].split(";")[0]?"../agent.png":"void.png"
+//waterpos = terrain[i][p]==6?tospecialimages(terrain[i][p],0):"void.png"
+}
+
+function verif()
+{
+//document.write('<script>if(document.cookie.split("agentmove=")[1].split(";")[0]=="1"){document.cookie="agentmove="+"0";alert("L\'agent se dÃ©place !");location.reload();}<\/script>')
+document.cookie= "reup=1"
+var evt = document.createEvent("MouseEvents");
+evt.initMouseEvent("click", true, true, window,0, 0, 0, 0, 0, false, false, false, false, 0, null);
+document.getElementById("file").dispatchEvent(evt);
+}
+
+//alert(document.cookie)
+//setTimeout("verif()",1000)
+traffic()
+</script>
+<form name="levelchange" action="map.html">
+<input name="level" id="file" type="file" onchange="document.levelchange.submit()">
+</form>
+</body>
+</html>

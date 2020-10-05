@@ -1,0 +1,12 @@
+//Pour rajouter un mod :
+//modinclude("{name}","{texture}.png")
+
+//Exemples
+modinclude(14,"woodenslab_1","woodenslab_1.png")
+modinclude(15,"woodenslab_2","woodenslab_2.png")
+
+modinclude(19,"cobbleslab_1","cobbleslab_1.png")
+modinclude(20,"cobbleslab_2","cobbleslab_2.png")
+
+modinclude(32,"woodenslab_3","woodenplanks_birch_3.png")
+modinclude(33,"woodenslab_4","woodenplanks_birch_4.png")

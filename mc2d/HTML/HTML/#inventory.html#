@@ -1,0 +1,291 @@
+<script src="mc_fichiers/defineblocks.js"></script>
+<script src="mc_fichiers/defineimages.js"></script>
+<script src="mc_fichiers/toimages.js"></script>
+<script src="mc_fichiers/defaultinv.js"></script>
+<script src="mc_fichiers/creainv.js"></script>
+<script src="mc_fichiers/modinclude.js"></script>
+<script src="mc_fichiers/texturepackinclude.js"></script>
+<script src="userData/texture-pack.txt"></script>
+<script src="userData/mod.txt"></script>
+<div id="cache" style="position:absolute;visibility:hidde;left:0;top:0;z-index:1;width:100%;height:98%;align:center;text-align: center;background-image: url('fonts\/file7.png');">Cette fonction n'est pas disponible hors-jeu !</div>
+<style>
+     @font-face {
+	font-family: 'mcfont';
+	src: url('minecraftfont.ttf'); 
+}
+
+
+#cache{ font-family: 'mcfont', sans-serif; color:white}
+     .case
+     {
+     border:3px solid black;
+     font-size:10;
+     background: gray;
+     color:white;
+     width:24px;
+     height:24px;
+     }
+     .crft
+     {
+     border:3px solid black;
+     font-size:10;
+     background: gray;
+  //   color:white;
+ //    width:24px;
+    // height:24px;
+     }
+    .container
+     {
+     border:3px solid black;
+     font-size:10;
+     background: gray;
+ //    color:gray;
+     }
+     img
+     {
+     padding:2px;
+     width:21px;
+     height:21px;
+     }
+    .counters
+    {
+    position:absolute;
+    //left:15px;
+    top:22px;
+    }
+    .secondbar
+    {
+   // visibility:hidden
+    }
+</style>
+<body style="text-align:center;background-image: url('fonts\/file7.png')" onload='loadimages();loadslotchoice()'>
+<base href="mc_img/">
+<!-- <button onclick="location.reload()">Actualiser</button> -->
+<br>
+<div id="cb" class="container" style="position:absolute;left:2">
+<table>
+<script>
+//alert(document.cookie)
+//try{alert(creainv.length)}catch(e){alert(e)}
+creative=1
+if (creative==1)
+{
+for(i=0;i<creainv.length;i++){
+document.write("<tr>")
+for(p=0;p<creainv[i].length;p++){
+if(creainv[i][p]==6) document.write('<td><div class="case" onclick="choiceblock('+i+','+p+')"><img src="'+tospecialimages(creainv[i][p],1)+'"><\/td>')
+else  {document.write('<td><div class="case" onclick="choiceblock('+i+','+p+')"><img src="'+toimages(creainv[i][p])+'"><\/td>')}//;alert(block[i*9+p])}
+}
+document.write("</tr>")
+}
+}
+
+//alert(block[13])
+</script>
+</table>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="craft" style="position : absolute;left:2px;width:96%;height:62%" class="container">
+<div class=crft onclick='document.cookie = "craft=0"' style="color:red;position : absolute;left:89% ;top:3px ;width:24px">X</div>
+<script>
+
+function crftinterv()
+{
+//alert(document.cookie.split("craft=")[1].split(";")[0])
+if(document.cookie.split("craft=")[1].split(";")[0]==0) document.getElementById("craft").style.visibility = "hidden"
+else document.getElementById("craft").style.visibility = "visible"
+}
+//crftinterv()
+setInterval("crftinterv()",500)
+</script></div>
+
+
+
+
+
+
+
+
+<br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br>
+<script>
+function choiceblock(row,block)
+{
+//alert(document.cookie)
+slot = document.cookie.split("invchoice=")[1].split(";")[0]
+block += row==0?1:0
+block -= row>=2?row-1:0
+block += 10*row
+//alert(block)
+if(block==6) document.cookie = "inv"+slot+"="+block
+else document.cookie = "inv"+slot+"="+block
+//alert(document.cookie)
+document.cookie = "qtt"+slot+"=64"
+//location.reload()
+}
+setInterval("loadimages()",100)
+//document.cookie= "inv2=6"
+//alert(document.cookie)
+
+function choice(number){
+for (i=1;i<19;i++)
+{
+document.getElementById(i).style.border= number==i?'3px solid darkgray':'3px solid black'
+//alert(document.cookie)
+}
+document.cookie = "invchoice="+number+";"
+slot = number
+}
+
+function doubletexture(texture)
+{
+if(document.inv1.src.indexOf(texture)!=-1) document.inv1.src = document.inv1.src.split(texture)[0]+document.inv1.src.split(texture)[1]
+if(document.inv2.src.indexOf(texture)!=-1) document.inv2.src = document.inv2.src.split(texture)[0]+document.inv2.src.split(texture)[1]
+if(document.inv3.src.indexOf(texture)!=-1) document.inv3.src = document.inv3.src.split(texture)[0]+document.inv3.src.split(texture)[1]
+if(document.inv4.src.indexOf(texture)!=-1) document.inv4.src = document.inv4.src.split(texture)[0]+document.inv4.src.split(texture)[1]
+if(document.inv5.src.indexOf(texture)!=-1) document.inv5.src = document.inv5.src.split(texture)[0]+document.inv5.src.split(texture)[1]
+if(document.inv6.src.indexOf(texture)!=-1) document.inv6.src = document.inv6.src.split(texture)[0]+document.inv6.src.split(texture)[1]
+if(document.inv7.src.indexOf(texture)!=-1) document.inv7.src = document.inv7.src.split(texture)[0]+document.inv7.src.split(texture)[1]
+if(document.inv8.src.indexOf(texture)!=-1) document.inv8.src = document.inv8.src.split(texture)[0]+document.inv8.src.split(texture)[1]
+if(document.inv9.src.indexOf(texture)!=-1) document.inv9.src = document.inv9.src.split(texture)[0]+document.inv9.src.split(texture)[1]
+if(document.inv10.src.indexOf(texture)!=-1) document.inv10.src = document.inv10.src.split(texture)[0]+document.inv10.src.split(texture)[1]
+if(document.inv11.src.indexOf(texture)!=-1) document.inv11.src = document.inv11.src.split(texture)[0]+document.inv11.src.split(texture)[1]
+if(document.inv12.src.indexOf(texture)!=-1) document.inv12.src = document.inv12.src.split(texture)[0]+document.inv12.src.split(texture)[1]
+if(document.inv13.src.indexOf(texture)!=-1) document.inv13.src = document.inv13.src.split(texture)[0]+document.inv13.src.split(texture)[1]
+if(document.inv14.src.indexOf(texture)!=-1) document.inv14.src = document.inv14.src.split(texture)[0]+document.inv14.src.split(texture)[1]
+if(document.inv15.src.indexOf(texture)!=-1) document.inv15.src = document.inv15.src.split(texture)[0]+document.inv15.src.split(texture)[1]
+if(document.inv16.src.indexOf(texture)!=-1) document.inv16.src = document.inv16.src.split(texture)[0]+document.inv16.src.split(texture)[1]
+if(document.inv17.src.indexOf(texture)!=-1) document.inv17.src = document.inv17.src.split(texture)[0]+document.inv17.src.split(texture)[1]
+if(document.inv18.src.indexOf(texture)!=-1) document.inv18.src = document.inv18.src.split(texture)[0]+document.inv18.src.split(texture)[1]
+}
+//try{alert(document.cookie)}catch(e){alert(e)}
+
+inv1 = parseInt(document.cookie.split("inv1=")[1].split(";")[0])
+inv2 = parseInt(document.cookie.split("inv2=")[1].split(";")[0])
+inv3 = parseInt(document.cookie.split("inv3=")[1].split(";")[0])
+inv4 = parseInt(document.cookie.split("inv4=")[1].split(";")[0])
+inv5 = parseInt(document.cookie.split("inv5=")[1].split(";")[0])
+inv6 = parseInt(document.cookie.split("inv6=")[1].split(";")[0])
+inv7 = parseInt(document.cookie.split("inv7=")[1].split(";")[0])
+inv8 = parseInt(document.cookie.split("inv8=")[1].split(";")[0])
+inv9 = parseInt(document.cookie.split("inv9=")[1].split(";")[0])
+inv10 = parseInt(document.cookie.split("inv10=")[1].split(";")[0])
+inv11 = parseInt(document.cookie.split("inv11=")[1].split(";")[0])
+inv12 = parseInt(document.cookie.split("inv12=")[1].split(";")[0])
+inv13 = parseInt(document.cookie.split("inv13=")[1].split(";")[0])
+inv14 = parseInt(document.cookie.split("inv14=")[1].split(";")[0])
+inv15 = parseInt(document.cookie.split("inv15=")[1].split(";")[0])
+inv16 = parseInt(document.cookie.split("inv16=")[1].split(";")[0])
+inv17 = parseInt(document.cookie.split("inv17=")[1].split(";")[0])
+inv18 = parseInt(document.cookie.split("inv18=")[1].split(";")[0])
+qtt = new Array()
+qtt[0] = null
+
+function counters()
+{
+for (i=1;i<19;i++)
+{
+qtt[i] = parseInt(document.cookie.split("qtt"+i+"=")[1].split(";")[0])
+//alert(qtt[i])
+if (toimages(document.cookie.split("inv"+i+"=")[1].split(";")[0])!=images[0])
+{
+document.getElementById("cou"+i).innerHTML = '<div class="counters">'+qtt[i]+'<\/div>'
+}
+else
+{
+document.getElementById("cou"+i).innerHTML = ""
+
+document.cookie = "inv"+i+"=-1"
+document.cookie = "qtt"+i+"=0"
+//alert(document.cookie)
+}
+}
+//alert(document.cookie)
+}
+
+function loadimages()
+{
+toimgtmp=0
+document.inv1.src = toimages(parseInt(document.cookie.split("inv1=")[1].split(";")[0]))
+document.inv2.src = toimages(parseInt(document.cookie.split("inv2=")[1].split(";")[0]))
+document.inv3.src = toimages(parseInt(document.cookie.split("inv3=")[1].split(";")[0]))
+document.inv4.src = toimages(parseInt(document.cookie.split("inv4=")[1].split(";")[0]))
+document.inv5.src = toimages(parseInt(document.cookie.split("inv5=")[1].split(";")[0]))
+document.inv6.src = toimages(parseInt(document.cookie.split("inv6=")[1].split(";")[0]))
+document.inv7.src = toimages(parseInt(document.cookie.split("inv7=")[1].split(";")[0]))
+document.inv8.src = toimages(parseInt(document.cookie.split("inv8=")[1].split(";")[0]))
+document.inv9.src = toimages(parseInt(document.cookie.split("inv9=")[1].split(";")[0]))
+document.inv10.src = toimages(parseInt(document.cookie.split("inv10=")[1].split(";")[0]))
+document.inv11.src = toimages(parseInt(document.cookie.split("inv11=")[1].split(";")[0]))
+document.inv12.src = toimages(parseInt(document.cookie.split("inv12=")[1].split(";")[0]))
+document.inv13.src = toimages(parseInt(document.cookie.split("inv13=")[1].split(";")[0]))
+document.inv14.src = toimages(parseInt(document.cookie.split("inv14=")[1].split(";")[0]))
+document.inv15.src = toimages(parseInt(document.cookie.split("inv15=")[1].split(";")[0]))
+document.inv16.src = toimages(parseInt(document.cookie.split("inv16=")[1].split(";")[0]))
+document.inv17.src = toimages(parseInt(document.cookie.split("inv17=")[1].split(";")[0]))
+document.inv18.src = toimages(parseInt(document.cookie.split("inv18=")[1].split(";")[0]))
+counters()
+doubletexture("wtr.png,")
+}
+
+function loadslotchoice()
+{
+number = document.cookie.split("invchoice=")[1].split(";")[0]
+document.getElementById("1").style.border= number==1?'3px solid darkgray':'3px solid black'
+document.getElementById("2").style.border= number==2?'3px solid darkgray':'3px solid black'
+document.getElementById("3").style.border= number==3?'3px solid darkgray':'3px solid black'
+document.getElementById("4").style.border= number==4?'3px solid darkgray':'3px solid black'
+document.getElementById("5").style.border= number==5?'3px solid darkgray':'3px solid black'
+document.getElementById("6").style.border= number==6?'3px solid darkgray':'3px solid black'
+document.getElementById("7").style.border= number==7?'3px solid darkgray':'3px solid black'
+document.getElementById("8").style.border= number==8?'3px solid darkgray':'3px solid black'
+document.getElementById("9").style.border= number==9?'3px solid darkgray':'3px solid black'
+document.getElementById("10").style.border= number==10?'3px solid darkgray':'3px solid black'
+document.getElementById("11").style.border= number==11?'3px solid darkgray':'3px solid black'
+document.getElementById("12").style.border= number==12?'3px solid darkgray':'3px solid black'
+document.getElementById("13").style.border= number==13?'3px solid darkgray':'3px solid black'
+document.getElementById("14").style.border= number==14?'3px solid darkgray':'3px solid black'
+document.getElementById("15").style.border= number==15?'3px solid darkgray':'3px solid black'
+document.getElementById("16").style.border= number==16?'3px solid darkgray':'3px solid black'
+document.getElementById("17").style.border= number==17?'3px solid darkgray':'3px solid black'
+document.getElementById("18").style.border= number==18?'3px solid darkgray':'3px solid black'
+}
+</script>
+  <script>
+  setInterval('if(document.cookie.split("ingame=")[1].split(";")[0]=="1"){document.getElementById("cache").style.visibility = "hidden"}else{document.getElementById("cache").style.visibility = "visible"}',500)
+  </script>
+
+<table style="position:absolute;left:2" class="container">
+<td><div class="case" id="1" onclick="choice(1)"><img name="inv1" onclicki="alert(this.src)"><div id="cou1"></div></td>
+<td><div class="case" id="2" onclick="choice(2)"><img name="inv2"><div id="cou2"></div></td>
+<td><div class="case" id="3" onclick="choice(3)"><img name="inv3"><div id="cou3"></div></td>
+<td><div class="case" id="4" onclick="choice(4)"><img name="inv4"><div id="cou4"></div></td>
+<td><div class="case" id="5" onclick="choice(5)"><img name="inv5"><div id="cou5"></div></td>
+<td><div class="case" id="6" onclick="choice(6)"><img name="inv6"><div id="cou6"></div></td>
+<td><div class="case" id="7" onclick="choice(7)"><img name="inv7"><div id="cou7"></div></td>
+<td><div class="case" id="8" onclick="choice(8)"><img name="inv8"> <div id="cou8"></div></td>
+<td><div class="case" id="9" onclick="choice(9)"><img name="inv9"><div id="cou9"></div></td>
+</table><br><br>
+<table style="position:absolute;left:2" class="container , secondbar">
+<td><div class="case" id="10" onclick="choice(10)"><img name="inv10" onclicki="alert(this.src)"><div id="cou10"></div></td>
+<td><div class="case" id="11" onclick="choice(11)"><img name="inv11"><div id="cou11"></div></td>
+<td><div class="case" id="12" onclick="choice(12)"><img name="inv12"><div id="cou12"></div></td>
+<td><div class="case" id="13" onclick="choice(13)"><img name="inv13"><div id="cou13"></div></td>
+<td><div class="case" id="14" onclick="choice(14)"><img name="inv14"><div id="cou14"></div></td>
+<td><div class="case" id="15" onclick="choice(15)"><img name="inv15"><div id="cou15"></div></td>
+<td><div class="case" id="16" onclick="choice(16)"><img name="inv16"><div id="cou16"></div></td>
+<td><div class="case" id="17" onclick="choice(17)"><img name="inv17"><div id="cou17"></div></td>
+<td><div class="case" id="18" onclick="choice(18)"><img name="inv18"><div id="cou18"></div></td>
+</table><br>
+</body>
