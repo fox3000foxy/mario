@@ -1,0 +1,100 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset=utf-8 />
+<title>Super Mario Maker Menu</title>
+<link href="Content/style.css" rel="stylesheet" />
+</head>
+<body>
+
+<div id="game">
+<div id="world">
+</div>
+</div>
+<style>
+.menu
+{
+position:absolute;
+background:black;
+border: 1px solid black;
+border-radius : 3px;
+color:white;
+font-size:150%;
+text-align:center;
+width:20%
+}
+
+#play
+{
+top : 47%;
+left : 60%;
+}
+
+#create
+{
+top : 60%;
+left : 60%;
+}
+#kb
+{
+top : 73%;
+left : 60%;
+}
+</style>
+<button onclick="window.location.href = 'menu2.html'" class="menu" id="create">Create</button>
+<button onclick="window.location.href = 'index.html?editor=0'" class="menu" id="play">Play</button>
+<script>
+if(!document.cookie)
+    document.cookie = "kb=true;"
+
+function kbcookie(p)
+{
+document.cookie = "kb="+p+";"
+}
+</script>
+<form name="check" class="menu" id="kb">
+<table><tr><td><input type="checkbox" name="checkbx" onclick="kbcookie(this.checked)"></td><td><div>Have a keyboard ?</div></td></tr></table>
+</form>
+<script>
+if(document.cookie.split("kb=")[1].split(";")[0]=="true")
+    document.check.checkbx.checked=true
+
+function kbcookie(p)
+{
+document.cookie = "kb="+p+";"
+}
+</script>
+<script>window.jQuery || document.write('<script src="Scripts/jquery.js"><\/script>')</script>
+<!--<form name="choose">
+<input type="file" style="position:absolute;z-index:1000" onchange="chosen(this.value)" id="file">
+</form>
+<div>
+<script>
+function evenemet()
+{
+var evt = document.createEvent("MouseEvents");
+evt.initMouseEvent("click", true, true, window,0, 0, 0, 0, 0, false, false, false, false, 0, null);
+document.getElementById("file").dispatchEvent(evt);
+}
+//evenemet()
+function chosen(p)
+{
+document.write('lol')
+document.write('<script src="'+p+'"><\/script>')
+}
+</script>
+</div>-->
+<!-- CHOOSE ROM PATH -->
+<script src="Scripts/levels/menubackground.js"></script>
+
+<script src="Scripts/oop.js"></script>
+<script src="Scripts/constants.js"></script>
+<script src="Scripts/sounds.js"></script>
+<script src="Scripts/main.js"></script>
+<script src="Scripts/menukeys.js"></script>
+<!-- Game Musik -->
+<audio id="GameMusic" preload="auto" autoplay loop>
+    <source src="audio/Overworld.ogg" type="audio/ogg" />
+</audio>
+</body>
+</html>
