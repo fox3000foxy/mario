@@ -1,0 +1,8 @@
+for (var i=1; i < poule.length; i++)
+{
+if (poule[i][0]!="" && poule[i][1]!="" && poule[i][2]!="" && poule[i][3]!="")
+{
+document.write("<option value='"+i+"'>"+poule[i][0]+"</option>")
+}
+}
+//document.getElementById("nom").innerHTML = "<option>zobi la mouche</option>"

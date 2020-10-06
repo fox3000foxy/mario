@@ -1,0 +1,34 @@
+table.poules
+{
+border : 10px double black;
+width : 100%;
+height: 100%;
+}
+
+table.search
+{
+border : 3px solid black;
+width : 100%;
+height: 20%;
+}
+
+tr
+{
+border : 4px solid black;
+}
+
+td.classes
+{
+text-align: center;
+//border: 1px solid black;
+}
+
+select
+{
+width: 100%
+}
+
+body
+{
+font-size:15%
+}

@@ -1,0 +1,17 @@
+<meta charset="UTF-8">
+<table class="editor">
+<link rel="stylesheet" href="style.css">
+<form name="editor" action="editor.html">
+<script src="delete.js"></script>
+<tr><td>
+<select id="nom" name="nom">
+<script>poule = new Array()</script>
+<script src="SQLManager.sql"></script>
+<script src="obtain.dll"></script>
+</select>
+</td>
+<td><input type="submit" value="-- Modifier --"></td>
+<td><input type="button" value="-- Supprimer --" onclick="javascript:if (confirm('Voulez-vous vraiment supprimer '+poule[document.editor.nom.value][0]+' ?') == 1){supp()}"></td></tr>
+<tr><td><input type="button" value="-- Ajouter --" onclick="location.href= 'editor.html?nom='+poule.length"></td></tr>
+</form>
+</table>

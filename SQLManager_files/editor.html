@@ -1,0 +1,50 @@
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<script>poule = new Array()</script>
+<script src="SQLManager.sql"></script>
+<script>
+nom = location.href.split("nom=")[1]
+//setTimeout("document.getElementById('nom').innerHTML += nom" , 5)
+//setTimeout("document.getElementById('nom').innerHTML += poule[location.href.split("nom=")[1]][0]" , 5)
+setTimeout("info()",50)
+
+i=0
+function info()
+{
+if(poule[location.href.split("nom=")[1]])
+{
+document.editor.nom1.value = poule[location.href.split("nom=")[1]][0]
+document.editor.race.value = poule[location.href.split("nom=")[1]][1]
+document.editor.color.value = poule[location.href.split("nom=")[1]][2]
+//document.sexepoule.sexepoulet.selectedIndex = poule[location.href.split("nom=")[1]][3]
+}
+}
+</script>
+<link rel=stylesheet href="style.css">
+</head>
+<body onload="info()">
+<table>
+<tr><br></tr>
+<form name="editor" action="Poules.html">
+<tr><td>Nom: </td><td><!--zobi la mouche--><input name="nom1" id="nom1" required></td><td></td><tr>
+<tr><td>Race: </td><td><input name="race" id="race"></td><tr>
+<tr><td>Couleur: </td><td><input name="color" id="color"></td><tr>
+<tr><td>Sexe:</td><td><!--qui va voler--></form>
+<form name="sexepoule">
+<select name="sexepoulet" id="sexe" value=>
+<script>
+document.write('<option value="1">Indéterminé</option>')
+document.write('<option value="2">Mâle</option>')
+document.write('<option value="3">Femelle</option>')
+</script>
+</select>
+</form>
+</td><tr>
+
+<tr><td><input type="submit" onclick="ajout();" value="Modifier"></td>
+<td><input type="submit" onclick='location.href="buttons.html"' value="Annuler"></td>
+</tr>
+</form></table>
+<!--dans le ciel-->
+<script src="creator.js"></script>
