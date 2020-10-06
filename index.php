@@ -1,4 +1,5 @@
 <html>
+    <script src="https://gist.github.com/keithweaver/4716b88f0b6e3e17577a819f42d348db.js"></script>
 <body>
 <table>
 <style>
@@ -15,28 +16,5 @@ td{border:1px solid black;}
 <!--<tr><td><img src="none.png" class="ico"><a href="tile example/tile-graphics.html">Tile example</a></td></tr>-->
 </table>
     <div style="position:absolute;bottom:5%;right:5%"><a href="https://discord.gg/5yEc3F">Communauté Discord / Discord community</a></div>
-<?php
-//set date time if not already done elsewhere
-date_default_timezone_set('America/Los_Angeles');
-
-//set date/time for entry
-$time_stamp = date('m\-d\-Y\-h:iA');
-
-//set file name and location
-$log = "assets/logs/log.txt";
-
-//open or create log.txt
-//[see docs for more modes](http://php.net/manual/en/function.fopen.php)
-$fp = fopen($log,"a+");
-
-//append text and time stamp to log.txt (the double \n's are to give readable space inbetween entries.) 
-fwrite($fp, $time_stamp . "\n" . "hello world" . "\n\n");
-
-//close log file
-fclose($fp);
-
-//You can also use unlink() to delete file if needed
-unlink($fp)
-?>
 </body>
 </html>
