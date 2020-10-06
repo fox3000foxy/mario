@@ -1,0 +1,30 @@
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<script>
+poule = new Array()
+</script>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="MyGoogle.ico">
+</head>
+<body>
+<script src="SQLManager.sql"></script>
+<table class="poules">
+<tr><td>Tableau SQLManager<td></tr>
+<script>
+poulecount = 0
+for (var i=1; i < poule.length; i++)
+{
+if (poule[i][0]!="" && poule[i][1]!="" && poule[i][2]!="")
+{
+poulecount++
+document.write("<tr><td>Data "+poulecount+":</td><td class='classes'>"+poule[i][0]+"</td><td class='classes'>"+poule[i][1]+"</td><td class='classes'>"+poule[i][2]+"</td><td class='classes'>"+poule[i][3]+"</td></tr>")
+}
+}
+</script>
+</table>
+<script>
+setTimeout("window.location.reload()",1000)
+</script>
+</body>
+</html>
