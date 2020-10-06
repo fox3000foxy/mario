@@ -16,7 +16,6 @@ td{border:1px solid black;}
 <!--<tr><td><img src="none.png" class="ico"><a href="tile example/tile-graphics.html">Tile example</a></td></tr>-->
 </table>
     <div style="position:absolute;bottom:5%;right:5%"><a href="https://discord.gg/5yEc3F">Communauté Discord / Discord community</a></div>
-        <script src="https://gist.github.com/keithweaver/4716b88f0b6e3e17577a819f42d348db.js"></script>
 </body>
 </html>
 
