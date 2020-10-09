@@ -27,7 +27,7 @@ image.src = 'tiles.png';
 const tileWidth = 24,
   tileHeight = 24;
   const sourceWidth = tileWidth*7,
-  sourceHeight = tileHeight*6;
+  sourceHeight = tileHeight*7;
   document.getElementById("myCanvas").top = 0
 //   alert(confirm("Have you already level code ?"))
   have=confirm("Have you already level code ?")
@@ -100,6 +100,11 @@ image.addEventListener('load', redrawSource);
 	 	{
             gg= tiles[compteur].indexOf?tiles[compteur]:toid(tiles[compteur])
 	 		resultat += "'"+gg+"',"
+			if (gg=="finish")
+				{
+					x = j*32
+					y = (mapRows - i - 1)*32
+				}
 			//compteur += mapColumns
 			compteur++
 	 	}
@@ -120,7 +125,7 @@ image.addEventListener('load', redrawSource);
 		}
 */		resultat += "]"
          fin = "</textarea></form>"
-	 	document.getElementById('resultat').innerHTML = debut+resultat+"|"+backgroundlv+fin
+	 	document.getElementById('resultat').innerHTML = debut+resultat+"|"+backgroundlv+"&{x:"+x+";y:"+y+"}"+fin
 	 	document.cookie = "kb="+document.cookie.split("kb=")[1].split(";")[0]+";"
  	 	document.cookie = "editorresult="+document.code.code.value
 //         jj = new Function("document.getElementById('resultat').innerHTML.exec('copy')")
@@ -317,6 +322,7 @@ function toid(p)
 				tileid = p==38?'starbox':tileid
 				tileid = p==39?'staticplant':tileid
 				tileid = p==40?'stone':tileid
+				tileid = p==41?'finish':tileid
 				return tileid
 }
 

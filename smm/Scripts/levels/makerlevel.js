@@ -13,7 +13,13 @@ function convertlevel()
 {
 document.write("<br><br>")
 var code = jsontable.split("|")[0]
-bg = jsontable.split("|")[1]
+bg = jsontable.split("|")[1].split("&")[0]
+// alert(bg)
+x = jsontable.split("x:")[1].split(";")[0]
+// alert(x)
+y = jsontable.split("y:")[1].split("}")[0]
+
+// alert(x)
 document.write("<script>jsontable = new Array();jsontable = "+code+"<\/script>")
 //document.write("here")
 //try{alert(jsontable[1][3])}catch(e){alert(e)}
@@ -46,4 +52,4 @@ else if (location.href.split("index.html?editor=")[1]=="2")
             var jsontable = document.cookie.split("editorresult=")[1]
     convertlevel()
     }
-document.write("<script>var definedLevels = [{data:"+result+"width: undefined,height: undefined,id: 0,background: "+bg+",}];try{for(n=0;n<definedLevels.length;n++){definedLevels[n].height = definedLevels[0].data[0].length + 1;definedLevels[n].width = definedLevels[0].data.length + 1;}}catch(e){alert(e)};//alert(definedLevels)</script>")
+document.write("<script>var definedLevels = [{data:"+result+"width: undefined,height: undefined,id: 0,background: "+bg+",x:"+x+",y:"+y+"}];try{for(n=0;n<definedLevels.length;n++){definedLevels[n].height = definedLevels[0].data[0].length + 1;definedLevels[n].width = definedLevels[0].data.length + 1;}}catch(e){alert(e)};//alert(definedLevels)</script>")

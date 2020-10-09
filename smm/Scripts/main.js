@@ -1230,6 +1230,9 @@ var Mario = Hero.extend({
 
 		if(this.onground && this.x >= this.level.width - 128)
 			this.victory();
+		if (this.x >= definedLevels[0].x && this.x <= definedLevels[0].x + 4 && this.y == definedLevels[0].y)
+			 this.victory();
+			 // alert(x+","+y)
 	},
 	input: function(keys) {
 		this.fast = keys.accelerate;
