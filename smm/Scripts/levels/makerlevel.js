@@ -15,7 +15,7 @@ document.write("<br><br>")
 var code = jsontable.split("|")[0]
 bg = jsontable.split("|")[1].split("&")[0]
 // alert(bg)
-x = jsontable.split("x:")[1].split(";")[0]
+x = jsontable.split("x:")[1].split("-")[0]
 // alert(x)
 y = jsontable.split("y:")[1].split("}")[0]
 

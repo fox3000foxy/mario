@@ -1,7 +1,7 @@
 <html>
 <body>
 <img id="levelbg" src="Content\\backgrounds\\01.png" style='visibility:hidden;position:absolute; left:0; top:0px;'>
-<canvas id='myCanvas' style='position:absolute;top:0; left:0;z-index:2'></canvas>
+<canvas id='myCanvas' onmouseup="clicked=0" onmousedown="clicked=1" style='position:absolute;top:0; left:0;z-index:2'></canvas>
 
 <!--<script>
 // document.getElementById("myCanvas").style.width = screen.availWidth 
@@ -36,8 +36,8 @@ const tileWidth = 24,
     ha = new Function("so="+so.split("|")[0])
     ha()
   }
-   mapColumns = have==true?so[0].length:prompt("Width : ","18");
-   mapRows = have==true?so.length:prompt("Height : ","8");
+   mapColumns = have==true?so[0].length:prompt("Width : ","25");
+   mapRows = have==true?so.length:prompt("Height : ","10");
    let tiles = new Array(mapColumns * mapRows);
 //    tiles = new Array
 //     for (i=0;i<mapColumns*mapRows;i++)
@@ -104,6 +104,7 @@ image.addEventListener('load', redrawSource);
 				{
 					x = j*32
 					y = (mapRows - i - 1)*32
+					//alert(x+","+y)
 				}
 			//compteur += mapColumns
 			compteur++
@@ -125,7 +126,7 @@ image.addEventListener('load', redrawSource);
 		}
 */		resultat += "]"
          fin = "</textarea></form>"
-	 	document.getElementById('resultat').innerHTML = debut+resultat+"|"+backgroundlv+"&{x:"+x+";y:"+y+"}"+fin
+	 	document.getElementById('resultat').innerHTML = debut+resultat+"|"+backgroundlv+"&{x:"+x+"-y:"+y+"}"+fin
 	 	document.cookie = "kb="+document.cookie.split("kb=")[1].split(";")[0]+";"
  	 	document.cookie = "editorresult="+document.code.code.value
 //         jj = new Function("document.getElementById('resultat').innerHTML.exec('copy')")
@@ -214,7 +215,7 @@ function redrawSource() {
 }
  
 function doMouseClick(e) {
-  clicked=1
+  //clicked=1
   let x = e.pageX;
   let y = e.pageY;
   let gridX = Math.floor(x / tileWidth) * tileWidth;
@@ -224,6 +225,7 @@ function doMouseClick(e) {
     let tileX = Math.floor(x / tileWidth);
     let tileY = Math.floor((y - mapHeight) / tileHeight);
     sourceTile = tileY * (sourceWidth / tileWidth) + tileX;
+    
     sourceX = gridX;
     sourceY = gridY - mapHeight;
     redrawSource();
@@ -237,6 +239,7 @@ function doMouseClick(e) {
     let tileY = Math.floor(y / tileHeight);
     let targetTile = tileY * mapColumns + tileX;
     tiles[targetTile] = sourceTile;
+    //if (targetTile == 41) {document.write('<img src="Content\/mario-finish.gif" style="position:absolute;top:'+tileY*tileHeight+';left:'+tileY*tileHeight+'">')}
     // update the string    
     let string = '[';
     for (let i = 0; i < mapColumns*mapRows; i++) {
@@ -337,8 +340,8 @@ tiles=new Array()
           let y = j;
           let gridX = i * tileWidth;
           let gridY = j * tileHeight;
-          onclicked = "this.style.top='-800px'"
-          onmouseovered = "if (clicked==1){this.style.top='-800px'; clicked=0}"
+          onclicked = "this.style.top='-800px';doMouseClick(event)"
+          onmouseovered = "if (clicked==1){this.style.top='-800px'}"
           src= so[i][j]==""?'air':so[i][j]
 //           alert(src)
           if(src!="air")

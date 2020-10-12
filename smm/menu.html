@@ -6,7 +6,12 @@
 <link href="Content/style.css" rel="stylesheet" />
 </head>
 <body>
+<div id="finish">
 
+</div>
+<script>
+document.getElementById('finish').style.visibility = 'hidden'
+</script>
 <div id="game">
 <div id="world">
 </div>
@@ -91,7 +96,7 @@ document.write('<script src="'+p+'"><\/script>')
 <script src="Scripts/constants.js"></script>
 <script src="Scripts/sounds.js"></script>
 <script src="Scripts/main.js"></script>
-<script src="Scripts/menukeys.js"></script>
+<!--<script src="Scripts/menukeys.js"></script>-->
 <!-- Game Musik -->
 <audio id="GameMusic" preload="auto" autoplay loop>
     <source src="audio/Overworld.ogg" type="audio/ogg" />

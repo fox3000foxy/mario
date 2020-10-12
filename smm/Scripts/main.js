@@ -1181,6 +1181,7 @@ var Hero = Figure.extend({
  * MARIO CLASS
  * -------------------------------------------
  */
+var w = 0
 var Mario = Hero.extend({
 	init: function(x, y, level) {
 		this.standSprites = [
@@ -1222,16 +1223,28 @@ var Mario = Hero.extend({
 			this._super(state);
 		}
 	},
+
 	setPosition: function(x, y) {
 		this._super(x, y);
 		var r = this.level.width - 640;
 		var w = (this.x <= 210) ? 0 : ((this.x >= this.level.width - 230) ? r : r / (this.level.width - 440) * (this.x - 210));		
+		var marge = 30
+		var demimarge = marge/10*7
 		this.level.setParallax(w);
-
-		if(this.onground && this.x >= this.level.width - 128)
+		document.getElementById("finish").innerHTML ='<img id="finish_level" src="Content\/mario-finish.gif">'
+                document.getElementById("finish").style.position = 'absolute'
+		document.getElementById("finish").style.left = definedLevels[0].x+'px'
+		document.getElementById("finish").style.bottom = definedLevels[0].y-5+'px'
+		if (this.x <= definedLevels[0].x + demimarge)
+		document.getElementById("finish").style.zIndex= '98'
+		if (this.x >= definedLevels[0].x + demimarge)
+		document.getElementById("finish").style.zIndex= '100'
+		if(this.onground && this.x >= this.level.width - 128 && definedLevels[0].indexOf('finish') != -1)
 			this.victory();
-		if (this.x >= definedLevels[0].x && this.x <= definedLevels[0].x + 4 && this.y == definedLevels[0].y)
+		if (this.x >= definedLevels[0].x && this.x <= definedLevels[0].x + marge && this.y == definedLevels[0].y)
+
 			 this.victory();
+			 
 			 // alert(x+","+y)
 	},
 	input: function(keys) {
@@ -1252,11 +1265,14 @@ var Mario = Hero.extend({
 		}
 	},
 	victory: function() {
+		document.getElementById("finish").innerHTML ='<img id="finish_level" src="Content\/mario-finish-2.gif">'
 		this.level.playMusic('success');
 		this.clearFrames();
 		this.view.show();
 		this.setImage(images.sprites, this.state === size_states.small ? 241 : 161, 81);
 		this.level.next();
+		setTimeout("document.getElementById(\"finish\").style.display = 'none'",7000)
+
 	},
 	shoot: function() {
 		if(!this.cooldown) {

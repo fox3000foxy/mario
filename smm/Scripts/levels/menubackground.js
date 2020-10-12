@@ -16,6 +16,10 @@ var definedLevels = [
 	height: undefined,
 	id: 0,
 	background: 1,
+	x: 7*32,
+	y: 3.75*32,
+//(jsontable.split("x:")[1].split(";")[0])
+  
 }
 ];
 

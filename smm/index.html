@@ -6,8 +6,12 @@
 <link href="Content/style.css" rel="stylesheet" />
 </head>
 <body>
+
 <div id="game">
+
 <div id="world">
+<div id="finish" class="finish">
+</div>
 </div>
 <div id="coinNumber" class="gauge">0</div>
 <div id="coin" class="gaugeSprite"></div>
@@ -44,8 +48,9 @@ document.write('<script src="'+p+'"><\/script>')
 <script src="Scripts/main.js"></script>
 <!-- Game Musik -->
 <audio id="GameMusic" preload="auto" autoplay loop>
-    <source src="audio/Overworld.ogg" type="audio/ogg" />
+    <source src="audio/Overworld.ogg" type="audio/ogg">
 </audio>
+
 <div id="buttonscontrol">
 <button class="controls" id="leftbutton" style="left:10%;top:90%;z-index:2000" onclick="leftpush()"> < </button>
 <button class="controls" id="upbutton" style="left:20%;top:80%;z-index:2000" onclick="uppush()"> ^ </button>

@@ -46,7 +46,7 @@ var death_modes = {
 };
 var images = {
 	enemies : BASEPATH + 'mario-enemies.png',
-	sprites : BASEPATH + 'mario-sprites.png',
+	sprites : confirm("OK:Mario\nCancel:Luigi")==true?BASEPATH + 'mario-sprites.png':BASEPATH + "luigi-sprites.png",
 	objects : BASEPATH + 'mario-objects.png',
 	peach   : BASEPATH + 'mario-peach.png',
 };
@@ -55,7 +55,7 @@ var constants = {
 	bounce          : 15,
 	cooldown        : 20,
 	gravity         : 2,
-	start_lives     : 3,
+	start_lives     : 4,
 	max_width       : 400,
 	max_height      : 15,
 	jumping_v       : 27,
