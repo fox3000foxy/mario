@@ -21,6 +21,15 @@
 </div>
 <div>
 <script>
+function background(p,q)
+{
+backgroundlv = p
+//document.getElementById("levelbg").style.backgroundImage = "url('"+q+"')"
+//document.getElementById("levelbg").style.backgroundRepeat = "no-repeat"
+document.getElementById("levelbg").src = q 
+convert()
+}
+
 let image = new Image();
 backgroundlv=1
 image.src = 'tiles.png';
@@ -33,6 +42,8 @@ const tileWidth = 24,
   have=confirm("Have you already level code ?")
   if (have==true) {
     so = prompt("Code of level :","")
+	//bg = so.split("|")[1].split("{")[0]
+	//background(parseInt(bg),"Content\\backgrounds\\0"+bg+".png")
     ha = new Function("so="+so.split("|")[0])
     ha()
   }
@@ -100,18 +111,26 @@ image.addEventListener('load', redrawSource);
 	 	{
             gg= tiles[compteur].indexOf?tiles[compteur]:toid(tiles[compteur])
 	 		resultat += "'"+gg+"',"
-			if (gg=="finish")
+			if (tiles.indexOf("finish")!=-1||tiles.indexOf(41)!=-1)
 				{
+					if(gg=="finish")
+					{
 					x = j*32
 					y = (mapRows - i - 1)*32
 					//alert(x+","+y)
+					}
 				}
+			else
+			{
+			x = (mapColumns-4) * 32
+			y = 32
+			}
 			//compteur += mapColumns
 			compteur++
 	 	}
 
-		resultat += "'',"
-		resultat += "'',"
+		//resultat += "'',"
+		//resultat += "'',"
 	 	resultat += "],"//+unescape("%0D%0A")
 	 }
 /*	 for (mu=0;mu<2;mu++){
@@ -334,7 +353,7 @@ if(have==true)
 tiles=new Array()
     for (i=0;i<so.length;i++)
 	 {
-	 	for (j=0;j<so[0].length-2;j++)
+	 	for (j=0;j<so[0].length;j++)
 	 	{
           let x = i;
           let y = j;
@@ -348,26 +367,16 @@ tiles=new Array()
           {
           document.write('<img onclick="'+onclicked+'" onmouseover="'+onmouseovered+'" src="tiles\/'+src+'.png" style="position:absolute;z-index:3;left:'+tileWidth*j+';top:'+tileHeight*i+';width:'+tileWidth+';height:'+tileHeight+'">')
           }
+		  //alert(tiles.length)
           tiles[tiles.length] = so[i][j]
 	 	}
     }
-    convert()
+	convert()
 }
 </script>
 </div>
 <!--<button style='position:absolute; left:0; top:805' onclick="location.href = 'convert.html'">Convert</button>-->
 <div id="scripter"><script>//alert("Hello world !")</script></div>
-
-<script>
-function background(p,q)
-{
-backgroundlv = p
-//document.getElementById("levelbg").style.backgroundImage = "url('"+q+"')"
-//document.getElementById("levelbg").style.backgroundRepeat = "no-repeat"
-document.getElementById("levelbg").src = q 
-convert()
-}
-</script>
 </body>
 </html>
 
@@ -376,3 +385,4 @@ convert()
 [['','','','','','','','','','','','','','','','','','','','',],['','','','','','','','','','','','','','','','','','','','',],['','','','','','','','','','','','','','','','','','','','',],['','','','','','','','','','','','','','','','','','','','',],['','','','','','','','','','','','','','','','','','','','',],['','','','','','','','','','','','','','','','','','','','',],['mario','','','','','','','','','','','','','','','','','','','',],['grass_top_left','grass_top','grass_top','grass_top','grass_top','grass_top','grass_top','grass_top','grass_top','grass_top','grass_top','grass_top','grass_top','grass_top','grass_top','grass_top','grass_top','grass_top_right','','',],]|1
 
 -->
+
