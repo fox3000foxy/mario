@@ -1239,10 +1239,7 @@ var Mario = Hero.extend({
 		document.getElementById("finish").style.zIndex= '98'
 		if (this.x >= definedLevels[0].x + demimarge)
 		document.getElementById("finish").style.zIndex= '100'
-		if(this.onground && this.x >= this.level.width - 128 && definedLevels[0].indexOf('finish') != -1)
-			this.victory();
 		if (this.x >= definedLevels[0].x && this.x <= definedLevels[0].x + marge && this.y >= definedLevels[0].y && this.y <= definedLevels[0].y + 128 && this.onground)
-
 			 this.victory();
 			 
 			 // alert(x+","+y)
