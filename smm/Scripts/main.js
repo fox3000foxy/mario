@@ -1227,7 +1227,10 @@ var Mario = Hero.extend({
 	setPosition: function(x, y) {
 		this._super(x, y);
 		var r = this.level.width - 640;
+		// var r2 = this.level.height - 640;
 		var w = (this.x <= 210) ? 0 : ((this.x >= this.level.width - 230) ? r : r / (this.level.width - 440) * (this.x - 210));		
+		// var h = (this.y <= 210) ? 0 : ((this.x >= this.level.height - 230) ? r2 : r2 / (this.level.height - 440) * (this.y - 210));	
+		// document.getElementById("world").style.top = "-"+r2+"px"
 		var marge = 30
 		var demimarge = marge/10*7
 		this.level.setParallax(w);
@@ -1416,6 +1419,7 @@ var Mario = Hero.extend({
 		return true;
 	},
 	die: function() {
+		location.reload()
 		this.setMarioState(mario_states.normal);
 		this.deathStepDown = Math.ceil(240 / this.deathFrames);
 		this.setupFrames(9, 2, false);
