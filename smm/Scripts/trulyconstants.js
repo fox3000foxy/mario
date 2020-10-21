@@ -84,7 +84,7 @@ var constants = {
 	bounce          : 15,
 	cooldown        : 20,
 	gravity         : 2,
-	start_lives     : location.href.indexOf("base_level.html")!=-1 || location.href.indexOf("menu.html")!=-1?parseInt(location.href.split("lives=")[1].split("&")[0]):0,
+	start_lives     : 4,
 	max_width       : 400,
 	max_height      : 15,
 	jumping_v       : 27,

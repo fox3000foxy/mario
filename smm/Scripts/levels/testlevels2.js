@@ -31,6 +31,9 @@ var definedLevels = [
 	width: 252,
 	height: 15,
 	id: 0,
+	x:7936,
+	// x:256,
+	y:64,
 	background: 1,
 	data:
 	[
@@ -293,6 +296,8 @@ var definedLevels = [
 	width: 220,
 	height: 15,
 	id: 1,
+	x:6784,
+	y:64,
 	background: 1,
 	data:
 	[
@@ -523,6 +528,8 @@ var definedLevels = [
 	width: 220,
 	height: 15,
 	id: 2,
+	x:6656,
+	y:32,
 	background: 1,
 	data:
 	[
@@ -753,6 +760,8 @@ var definedLevels = [
 	width: 194,
 	height: 15,
 	id: 3,
+	x:6112,
+	y:96,
 	background: 8,
 	data:
 	[
@@ -957,6 +966,8 @@ var definedLevels = [
 	width: 203,
 	height: 15,
 	id: 4,
+	x:6400,
+	y:128,
 	background: 8,
 	data:
 	[
@@ -1170,6 +1181,8 @@ var definedLevels = [
 	width: 140,
 	height: 15,
 	id: 5,
+	x:4384,
+	y:96,
 	background: 3,
 	data:
 	[
@@ -1320,6 +1333,8 @@ var definedLevels = [
 	width: 165,
 	height: 15,
 	id: 6,
+	x:5152,
+	y:224,
 	background: 3,
 	data:
 	[
@@ -1495,6 +1510,8 @@ var definedLevels = [
 	width: 177,
 	height: 15,
 	id: 7,
+	x:5568,
+	y:128,
 	background: 5,
 	data:
 	[
@@ -1682,6 +1699,8 @@ var definedLevels = [
 	width: 181,
 	height: 15,
 	id: 8,
+	x:5664,
+	y:128,
 	background: 5,
 	data:
 	[
@@ -1873,6 +1892,8 @@ var definedLevels = [
 	width: 242,
 	height: 15,
 	id: 9,
+	x:7584,
+	y:192,
 	background: 6,
 	data:
 	[
@@ -2125,6 +2146,8 @@ var definedLevels = [
 	width: 161,
 	height: 15,
 	id: 10,
+	x:4640,
+	y:160,
 	background: 6,
 	data:
 	[
@@ -2296,6 +2319,8 @@ var definedLevels = [
 	width: 106,
 	height: 15,
 	id: 11,
+	x:3264,
+	y:160,
 	background: 2,
 	data:
 	[
@@ -2412,6 +2437,8 @@ var definedLevels = [
 	width: 233,
 	height: 15,
 	id: 12,
+	x:7328,
+	y:96,
 	background: 2,
 	data:
 	[
@@ -2655,6 +2682,8 @@ var definedLevels = [
 	width: 162,
 	height: 15,
 	id: 13,
+	x:5024,
+	y:128,
 	background: 2,
 	data:
 	[
@@ -2827,6 +2856,8 @@ var definedLevels = [
 	width: 155,
 	height: 15,
 	id: 14,
+	x:4800,
+	y:224,
 	background: 4,
 	data:
 	[

@@ -1,4 +1,4 @@
-/*
+﻿/*
  * *****
  * WRITTEN BY FLORIAN RAPPL, 2012.
  * florian-rappl.de
@@ -84,21 +84,21 @@ var constants = {
 	bounce          : 15,
 	cooldown        : 20,
 	gravity         : 2,
-	start_lives     : location.href.indexOf("base_level.html")!=-1 || location.href.indexOf("menu.html")!=-1?parseInt(location.href.split("lives=")[1].split("&")[0]):0,
+	start_lives     : 4,
 	max_width       : 400,
 	max_height      : 15,
 	jumping_v       : 27,
 	walking_v       : 5,
 	mushroom_v      : 3,
-	ballmonster_v   : 2,
-	spiked_turtle_v : 1.5,
+	ballmonster_v   : 20,
+	spiked_turtle_v : 10.5,
 	small_turtle_v  : 3,
-	big_turtle_v    : 2,
+	big_turtle_v    : 20,
 	shell_v         : 10,
 	shell_wait      : 25,
 	star_vx         : 4,
 	star_vy         : 16,
-	bullet_v        : 12,
+	bullet_v        : 120,
 	max_coins       : 100,
 	pipeplant_count : 150,
 	pipeplant_v     : 1,
