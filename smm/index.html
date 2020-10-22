@@ -14,6 +14,11 @@
 </div>
 <script>
 document.getElementById('finish').style.visibility = 'hidden'
+if (localStorage.getItem("attr")==null)
+{
+localStorage.setItem("attr","smw/")
+localStorage.setItem("attrindex","0")
+}
 </script>
 <div id="game">
 <div id="world">
@@ -48,9 +53,14 @@ left : 60%;
 top : 73%;
 left : 60%;
 }
+#select
+{
+top : 73%;
+left : 60%;
+}
 </style>
 <button onclick="window.location.href = 'menu2.html'" class="menu" id="create">Create</button>
-<button onclick="confirm('Ok : Custom level\nCancel: Basics levels')?window.location.href = 'menu.html?editor=0&lives=4&coins=0':window.location.href = 'base_level.html?level='+prompt('What level (number of (0 to 14)) ? ','0') + '&lives=0&coins=0'" class="menu" id="play">Play</button>
+<button onclick="confirm('Ok : Custom level\nCancel: Basics levels')?window.location.href = 'menu.html?editor=0&lives=4&coins=0':window.location.href = 'base_level.html?level='+prompt('What level (number of (0 to 14)) ? ','0') + '&lives=4&coins=0'" class="menu" id="play">Play</button>
 <script>
 if(!document.cookie)
     document.cookie = "kb=true;"
@@ -62,6 +72,13 @@ document.cookie = "kb="+p+";"
 
 </script>
 <form name="check" class="menu" id="kb">
+<select name="theselect" onchange="localStorage.setItem('attr',document.forms.kb.theselect.children[document.forms.kb.theselect.selectedIndex].value);localStorage.setItem('attrindex',document.forms.kb.theselect.selectedIndex);location.reload()">
+<option value="smw/">Super Mario World</option>
+<option value="smb/">Super Mario Bros</option>
+</select>
+<script>
+document.forms.kb.theselect.selectedIndex = localStorage.getItem('attrindex')?localStorage.getItem('attrindex'):0
+</script>
 <table><tr><td><input type="checkbox" name="checkbx" onclick="kbcookie(this.checked)"></td><td><div onclick="easteregg()">Have a keyboard ?</div></td></tr></table>
 </form>
 <script>
@@ -101,6 +118,7 @@ document.write('<script src="'+p+'"><\/script>')
 <script src="Scripts/main.js"></script>
 <script src="Scripts/sounds.js"></script>
 <script src="Scripts/keys.js"></script>
+
 
 <!-- <div id="ester">
 </div>
