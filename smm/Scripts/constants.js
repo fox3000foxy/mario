@@ -23,12 +23,24 @@ if (definedLevels[levelnumber].data[i].indexOf('peach')!=-1)
 	counterplayer += 1
 }
 }
- 
+var attr = localStorage.getItem('attr')
 var AUDIOPATH = 'Content/audio/';
-var BASEPATH   = 'Content/';
+var BASEPATH   = 'Content/'+attr;
 var DIV        = '<div />';
 var CLS_FIGURE = 'figure';
 var CLS_MATTER = 'matter';
+ var images = {
+	// sprites : BASEPATH + counterplayer!=1?'mario-sprites.png':confirm("OK:Mario\nCancel:Luigi")==true?'mario-sprites.png':"luigi-sprites.png",
+	sprites : BASEPATH + 'mario-sprites.png',
+	spritesf : BASEPATH + 'mario-fire.png',
+	spritesl: BASEPATH + "luigi-sprites.png",
+	spriteslf: BASEPATH + "luigi-fire.png",
+	spritesp: BASEPATH + "peach-sprites.png",
+	spritespf: BASEPATH + "peach-fire.png",
+	enemies : BASEPATH + 'mario-enemies.png',
+	objects : BASEPATH + 'mario-objects.png',
+	peach   : BASEPATH + 'mario-peach.png',
+};
 
 var directions = {
 	none  : 0,
@@ -70,15 +82,7 @@ var death_modes = {
 	normal : 0,
 	shell  : 1,
 };
-var images = {
-	// sprites : BASEPATH + counterplayer!=1?'mario-sprites.png':confirm("OK:Mario\nCancel:Luigi")==true?'mario-sprites.png':"luigi-sprites.png",
-	sprites : BASEPATH + 'mario-sprites.png',
-	spritesl: BASEPATH + "luigi-sprites.png",
-	spritesp: BASEPATH + "peach-sprites.png",
-	enemies : BASEPATH + 'mario-enemies.png',
-	objects : BASEPATH + 'mario-objects.png',
-	peach   : BASEPATH + 'mario-peach.png',
-};
+
 var constants = {
 	interval        : 20,
 	bounce          : 15,

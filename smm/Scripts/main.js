@@ -8,7 +8,7 @@
  * PRE CODE
  * -------------------------------------------
  */
- 
+ camheight=1
  levelnumber = location.href.indexOf("base_level") != -1?parseInt(location.href.split("level=")[1]):0
  if (levelnumber == 15){alert("Good job ! You have finish all basics levels ! Congratulations !\n And now try to play Discord's levels !\n The link is on main page of our site !");location.href = 'index.html'}
 	for (i=0;i<definedLevels[levelnumber].data.length;i++){
@@ -176,7 +176,7 @@ var Level = Base.extend({
 		this.liveGauge = new Gauge('live', 0, 430, 6, 6, true);
 	},
 	reload: function() {
-		if(adddeathplayer == 2){
+		if(adddeathplayer == counterplayer){
 		var settings = {};
 		this.pause();
 		
@@ -237,6 +237,10 @@ var Level = Base.extend({
 			var col = data[i];
 			
 			for(var j = 0, height = col.length; j < height; j++) {
+                if (col[j]=='mario')
+                {
+                    levelheight = j*32
+                }
 				if(reflection[col[j]])
 					new (reflection[col[j]])(i * 32, (height - j - 1) * 32, this);
 			}
@@ -373,6 +377,7 @@ var Level = Base.extend({
 	setPosition: function(x, y) {
 		this._super(x, y);
 		this.world.css('left', -x);
+		this.world.css('top', -y);
 	},
 	setImage: function(index) {
 		var img = BASEPATH + 'backgrounds/' + ((index < 10 ? '0' : '') + index) + '.png';
@@ -385,9 +390,9 @@ var Level = Base.extend({
 	setSize: function(width, height) {
 		this._super(width, height);
 	},
-	setParallax: function(x) {
-		this.setPosition(x, this.y);
-		this.world.parent().css('background-position', '-' + Math.floor(x / 3) + 'px -380px');
+	setParallax: function(x,y) {
+		this.setPosition(x, y);
+		this.world.parent().css('background-position', '-' + Math.floor(x / 3) + 'px -'+380+'px');
 	},
 });
 
@@ -588,12 +593,16 @@ var Matter = Base.extend({
 		this.view = $(DIV).addClass(CLS_MATTER).appendTo(level.world);
 		this.level = level;
 		this._super(x, y);
+//         alert(y)
 		this.setSize(32, 32);
 		this.addToGrid(level);
    
 	},
 	addToGrid: function(level) {
 		level.obstacles[this.x / 32][this.level.getGridHeight() - 1 - this.y / 32] = this;
+	},
+    removeToGrid: function(level) {
+		level.obstacles[this.x / 32][this.level.getGridHeight() - 1 - this.y / 32] = '';
 	},
 	setImage: function(img, x, y) {
 		this.view.css({
@@ -605,7 +614,7 @@ var Matter = Base.extend({
 	setPosition: function(x, y) {
 		this.view.css({
 			left: x,
-			bottom: y
+			bottom: y,
 		});
 		this._super(x, y);
 	},
@@ -984,6 +993,7 @@ var Coin = Item.extend({
 		this.view.remove();
 	},
 }, 'coin');
+
 var CoinBoxCoin = Coin.extend({
 	init: function(x, y, level) {
 		this._super(x, y, level);
@@ -1051,6 +1061,28 @@ var MultipleCoinBox = CoinBox.extend({
 		this._super(x, y, level, 8);
 	},
 }, 'multiple_coinbox');
+
+/*
+ * -------------------------------------------
+ * BREAKABLEBOX CLASSE
+ * -------------------------------------------
+ */
+var BreakableBox = Item.extend({
+	init: function(x, y, level, amount) {
+		this._super(x, y, true, level);
+		this.setImage(images.objects, 346, 328);
+	},
+	activate: function(from) {
+        if (from.state === size_states.big)
+        {
+        this.removeToGrid(level)
+        this._super();
+        this.clearFrames();
+		this.setImage(images.objects, 307, 330);
+        }
+    },
+}, 'breakbox');
+
 
 /*
  * -------------------------------------------
@@ -1129,6 +1161,30 @@ var Star = ItemFigure.extend({
 		}
 	},
 });
+
+/*
+ * -------------------------------------------
+ * BOX CLASS
+ * -------------------------------------------
+ */
+var MushroomBox = Item.extend({
+	init: function(x, y, level) {
+		this._super(x, y, true, level);
+		this.setImage(images.objects, 96, 33);
+		this.max_mode = mushroom_mode.plant;
+		this.mushroom = new Mushroom(x, y, level);
+		this.setupFrames(8, 4, false);
+	},
+	activate: function(from) {
+		if(!this.activated) {
+			this.clearFrames();
+			this.bounce();
+			this.setImage(images.objects, 514, 194);
+		}
+			
+		this._super(from);
+	},
+}, 'box');
 
 /*
  * -------------------------------------------
@@ -1317,7 +1373,10 @@ var Mario = Hero.extend({
 		this.deathDir = 1;
 		this.deathCount = 0;
 		this.direction = directions.right;
+		if (this.marioState === mario_states.normal)
 		this.setImage(images.sprites, 81, 0);
+		else
+		this.setImage(images.spritesf, 81, 0);
 		this.crouching = true;
 		this.fast = false;
 	},
@@ -1330,19 +1389,19 @@ var Mario = Hero.extend({
 			this._super(state);
 		}
 	},
-
 	setPosition: function(x, y) {
 		 // xmario = this.x
 		 // ymario = this.y
 		this._super(x, y);
+        
 		var r = this.level.width - 640;
 		// var r2 = this.level.height - 640;
-		if (cam==0 ||counterplayer==1){var w = (this.x <= 210) ? 0 : ((this.x >= this.level.width - 230) ? r : r / (this.level.width - 440) * (this.x - 210));		}
-		// var h = (this.y <= 210) ? 0 : ((this.x >= this.level.height - 230) ? r2 : r2 / (this.level.height - 440) * (this.y - 210));	
-		// document.getElementById("world").style.top = "-"+r2+"px"
+		if (cam==0 ||counterplayer==1){w = (this.x <= 210) ? 0 : ((this.x >= this.level.width - 230) ? r : r / (this.level.width - 440) * (this.x - 210));}
+        levelheight = 32* 6
+		if (cam==0) {ley = this.y >= levelheight?-this.y+levelheight:0}
 		var marge = 30
 		var demimarge = marge/10*7
-		this.level.setParallax(w);
+		this.level.setParallax(w,ley);
                 document.getElementById("finish").style.position = 'absolute'
 		document.getElementById("finish").style.left = definedLevels[levelnumber].x+'px'
 		document.getElementById("finish").style.bottom = definedLevels[levelnumber].y-5+'px'
@@ -1379,7 +1438,11 @@ var Mario = Hero.extend({
 		this.level.playMusic('success');
 		this.clearFrames();
 		this.view.show();
+		if (this.marioState === mario_states.normal)
 		this.setImage(images.sprites, this.state === size_states.small ? 241 : 161, 81);
+		else
+		this.setImage(images.spritesf, this.state === size_states.small ? 241 : 161, 81);
+		
 		this.level.next();
 		setTimeout("document.getElementById(\"finish\").style.display = 'none'",7000)
 		setTimeout("document.write(JSON.stringify(ghost123))",1)
@@ -1421,6 +1484,7 @@ var Mario = Hero.extend({
 			this.level.playSound('grow');
 			this.setState(size_states.big);
 			this.blink(3);
+			this.grow()
 		}
 	},
 	shooter: function() {
@@ -1440,7 +1504,10 @@ var Mario = Hero.extend({
 				this.setImage(images.sprites, 0, 0);
 		} else {
 			if(!this.setupFrames(9, 2, true, 'WalkRightBig'))
-				this.setImage(images.sprites, 0, 243);
+			if (this.marioState === mario_states.normal)
+			this.setImage(images.sprites, 0, 243);
+			else
+			this.setImage(images.spritesf, 0, 243);
 		}
 	},
 	walkLeft: function() {
@@ -1449,17 +1516,26 @@ var Mario = Hero.extend({
 				this.setImage(images.sprites, 80, 81);
 		} else {
 			if(!this.setupFrames(9, 2, false, 'WalkLeftBig'))
+				if (this.marioState === mario_states.normal)
 				this.setImage(images.sprites, 81, 162);
+			else
+				this.setImage(images.spritesf, 81, 162);
 		}
 	},
 	stand: function() {
 		var coords = this.standSprites[this.state - 1][this.direction === directions.left ? 0 : 1][this.onground ? 0 : 1];
+		if (this.marioState === mario_states.normal)
 		this.setImage(images.sprites, coords.x, coords.y);
+		else
+		this.setImage(images.spritesf, coords.x, coords.y);
 		this.clearFrames();
 	},
 	crouch: function() {
 		var coords = this.crouchSprites[this.state - 1][this.direction === directions.left ? 0 : 1];
+		if (this.marioState === mario_states.normal)
 		this.setImage(images.sprites, coords.x, coords.y);
+		else
+		this.setImage(images.spritesf, coords.x, coords.y);
 		this.clearFrames();
 	},
 	jump: function() {
@@ -1473,6 +1549,8 @@ var Mario = Hero.extend({
 	addCoin: function() {
 		this.setCoins(this.coins + 1);
 		numberCoin -= -1
+		if (document.getElementById("coinNumber").innerHTML==99)
+		this.level.playSound("lifeupgrade")
 		document.getElementById("coinNumber").innerHTML = numberCoin%100
 		la100aine = (numberCoin - numberCoin%100) /100
 		document.getElementById("liveNumber").innerHTML = constants.start_lives + la100aine
@@ -1600,7 +1678,10 @@ var Luigi = Hero.extend({
 		this.deathDir = 1;
 		this.deathCount = 0;
 		this.direction = directions.right;
+		if (this.luigiState === luigi_states.normal)
 		this.setImage(images.spritesl, 81, 0);
+		else
+		this.setImage(images.spriteslf, 81, 0);
 		this.crouching = false;
 		this.fast = false;
 	},
@@ -1620,9 +1701,9 @@ var Luigi = Hero.extend({
 		this._super(x, y);
 		var r = this.level.width - 640;
 		// var r2 = this.level.height - 640;
-		if (cam==1 ||counterplayer==1){var w = (this.x <= 210) ? 0 : ((this.x >= this.level.width - 230) ? r : r / (this.level.width - 440) * (this.x - 210));		}
-		// var h = (this.y <= 210) ? 0 : ((this.x >= this.level.height - 230) ? r2 : r2 / (this.level.height - 440) * (this.y - 210));	
-		// document.getElementById("world").style.top = "-"+r2+"px"
+		if (cam==1 ||counterplayer==1){w = (this.x <= 210) ? 0 : ((this.x >= this.level.width - 230) ? r : r / (this.level.width - 440) * (this.x - 210));}
+        levelheight = 32* 6
+		if (cam==1) {ley = this.y >= levelheight?-this.y+levelheight:0}
 		var marge = 30
 		var demimarge = marge/10*7
 		this.level.setParallax(w);
@@ -1661,7 +1742,10 @@ var Luigi = Hero.extend({
 		this.level.playMusic('success');
 		this.clearFrames();
 		this.view.show();
+		if (this.luigiState === luigi_states.normal)
 		this.setImage(images.spritesl, this.state === size_states.small ? 241 : 161, 81);
+		else
+		this.setImage(images.spriteslf, this.state === size_states.small ? 241 : 161, 81);
 		this.level.next();
 		setTimeout("document.getElementById(\"finish\").style.display = 'none'",7000)
 		setTimeout("document.write(JSON.stringify(ghost123))",1)
@@ -1722,7 +1806,10 @@ var Luigi = Hero.extend({
 				this.setImage(images.spritesl, 0, 0);
 		} else {
 			if(!this.setupFrames(9, 2, true, 'WalkRightBig'))
+				if (this.luigiState === luigi_states.normal)
 				this.setImage(images.spritesl, 0, 243);
+				else
+				this.setImage(images.spriteslf, 0, 243);
 		}
 	},
 	walkLeft: function() {
@@ -1731,17 +1818,26 @@ var Luigi = Hero.extend({
 				this.setImage(images.spritesl, 80, 81);
 		} else {
 			if(!this.setupFrames(9, 2, false, 'WalkLeftBig'))
+				if (this.luigiState === luigi_states.normal)
 				this.setImage(images.spritesl, 81, 162);
+				else
+				this.setImage(images.spriteslf, 81, 162);
 		}
 	},
 	stand: function() {
 		var coords = this.standSprites[this.state - 1][this.direction === directions.left ? 0 : 1][this.onground ? 0 : 1];
+		if (this.luigiState === luigi_states.normal)
 		this.setImage(images.spritesl, coords.x, coords.y);
+		else
+		this.setImage(images.spriteslf, coords.x, coords.y);
 		this.clearFrames();
 	},
 	crouch: function() {
 		var coords = this.crouchSprites[this.state - 1][this.direction === directions.left ? 0 : 1];
+		if (this.luigiState === luigi_states.normal)
 		this.setImage(images.spritesl, coords.x, coords.y);
+		else
+		this.setImage(images.spriteslf, coords.x, coords.y);
 		this.clearFrames();
 	},
 	jump: function() {
@@ -1755,6 +1851,8 @@ var Luigi = Hero.extend({
 		addCoin: function() {
 		this.setCoins(this.coins + 1);
 		numberCoin -= -1
+		if (document.getElementById("coinNumber").innerHTML==99)
+		this.level.playSound("lifeupgrade")
 		document.getElementById("coinNumber").innerHTML = numberCoin%100
 		la100aine = (numberCoin - numberCoin%100) /100
 		document.getElementById("liveNumber").innerHTML = constants.start_lives + la100aine
@@ -1836,6 +1934,7 @@ var Luigi = Hero.extend({
 	},
 }, 'luigi');
 
+
 /*
  * -------------------------------------------
  * PEACH CLASS
@@ -1868,8 +1967,10 @@ var Peach = Hero.extend({
 		this.deathDir = 1;
 		this.deathCount = 0;
 		this.direction = directions.right;
+		if (this.peachState === peach_states.normal)
 		this.setImage(images.spritesp, 81, 0);
-		// alert(images.spritesp)
+		else
+		this.setImage(images.spritespf, 81, 0);
 		this.crouching = false;
 		this.fast = false;
 	},
@@ -1889,9 +1990,11 @@ var Peach = Hero.extend({
 		this._super(x, y);
 		var r = this.level.width - 640;
 		// var r2 = this.level.height - 640;
-		if (cam==2 ||counterplayer==1){var w = (this.x <= 210) ? 0 : ((this.x >= this.level.width - 230) ? r : r / (this.level.width - 440) * (this.x - 210));		}
-		// var h = (this.y <= 210) ? 0 : ((this.x >= this.level.height - 230) ? r2 : r2 / (this.level.height - 440) * (this.y - 210));	
-		// document.getElementById("world").style.top = "-"+r2+"px"
+		if (cam==2){w = (this.x <= 210) ? 0 : ((this.x >= this.level.width - 230) ? r : r / (this.level.width - 440) * (this.x - 210));}
+		if (cam==1 && counterplayer==2){w = (this.x <= 210) ? 0 : ((this.x >= this.level.width - 230) ? r : r / (this.level.width - 440) * (this.x - 210));}
+        levelheight = 32* 6
+		if (cam==2) {ley = this.y >= levelheight?-this.y+levelheight:0}
+		if (cam==1 && counterplayer==2) {ley = this.y >= levelheight?-this.y+levelheight:0}
 		var marge = 30
 		var demimarge = marge/10*7
 		this.level.setParallax(w);
@@ -1930,7 +2033,10 @@ var Peach = Hero.extend({
 		this.level.playMusic('success');
 		this.clearFrames();
 		this.view.show();
+		if (this.peachState === peach_states.normal)
 		this.setImage(images.spritesp, this.state === size_states.small ? 241 : 161, 81);
+		else
+		this.setImage(images.spritespf, this.state === size_states.small ? 241 : 161, 81);
 		this.level.next();
 		setTimeout("document.getElementById(\"finish\").style.display = 'none'",7000)
 		setTimeout("document.write(JSON.stringify(ghost123))",1)
@@ -1991,7 +2097,10 @@ var Peach = Hero.extend({
 				this.setImage(images.spritesp, 0, 0);
 		} else {
 			if(!this.setupFrames(9, 2, true, 'WalkRightBig'))
+				if (this.peachState === peach_states.normal)
 				this.setImage(images.spritesp, 0, 243);
+				else
+				this.setImage(images.spritespf, 0, 243);
 		}
 	},
 	walkLeft: function() {
@@ -2000,17 +2109,26 @@ var Peach = Hero.extend({
 				this.setImage(images.spritesp, 80, 81);
 		} else {
 			if(!this.setupFrames(9, 2, false, 'WalkLeftBig'))
+				if (this.peachState === peach_states.normal)
 				this.setImage(images.spritesp, 81, 162);
+				else
+				this.setImage(images.spritespf, 81, 162);
 		}
 	},
 	stand: function() {
 		var coords = this.standSprites[this.state - 1][this.direction === directions.left ? 0 : 1][this.onground ? 0 : 1];
+		if (this.peachState === peach_states.normal)
 		this.setImage(images.spritesp, coords.x, coords.y);
+		else
+		this.setImage(images.spritespf, coords.x, coords.y);
 		this.clearFrames();
 	},
 	crouch: function() {
 		var coords = this.crouchSprites[this.state - 1][this.direction === directions.left ? 0 : 1];
+		if (this.peachState === peach_states.normal)
 		this.setImage(images.spritesp, coords.x, coords.y);
+		else
+		this.setImage(images.spritespf, coords.x, coords.y);
 		this.clearFrames();
 	},
 	jump: function() {
@@ -2024,10 +2142,13 @@ var Peach = Hero.extend({
 		addCoin: function() {
 		this.setCoins(this.coins + 1);
 		numberCoin -= -1
+		if (document.getElementById("coinNumber").innerHTML==99)
+		this.level.playSound("lifeupgrade")
 		document.getElementById("coinNumber").innerHTML = numberCoin%100
 		la100aine = (numberCoin - numberCoin%100) /100
 		document.getElementById("liveNumber").innerHTML = constants.start_lives + la100aine
 		window.location = "#"+la100aine
+
 
 	},
 	playFrame: function() {		
@@ -2625,7 +2746,7 @@ var PipePlant = Plant.extend({
  * -------------------------------------------
  */
 $(document).ready(function() {
-	var level = new Level('world');
+	level = new Level('world');
 	level.load(definedLevels[levelnumber]);
     level.setSounds(new SoundManager());
 	level.start();
