@@ -2,11 +2,6 @@
 <body>
 <img id="levelbg" src="Content\\backgrounds\\01.png" style='visibility:hidden;position:absolute; left:0; top:0px;'>
 <canvas id='myCanvas' onmouseup="clicked=0" onmousedown="clicked=1" style='position:absolute;top:0; left:0;z-index:2'></canvas>
-
-<!--<script>
-// document.getElementById("myCanvas").style.width = screen.availWidth 
-// document.getElementById("myCanvas").style.height = screen.availHeight 
-</script>-->
 <label id='result' style='position:absolute; left:0;font-size:0.1%; top:725;color: white;'>Click on the image at the bottom to select a tile, then click on the grid to draw.</label>
 <label id='resultat' style='position:absolute; left:0;visibility:hidden;'>Click on the image at the bottom to select a tile, then click on the grid to draw.</label>
 <div id="backgrounds" style="visibility:hidden;">
@@ -21,11 +16,8 @@
 </div>
 <div>
 <script>
-function background(p,q)
-{
+function background(p,q){
 backgroundlv = p
-//document.getElementById("levelbg").style.backgroundImage = "url('"+q+"')"
-//document.getElementById("levelbg").style.backgroundRepeat = "no-repeat"
 document.getElementById("levelbg").src = q 
 convert()
 }
@@ -50,16 +42,6 @@ const tileWidth = 24,
    mapColumns = have==true?so[0].length:prompt("Width : ","25");
    mapRows = have==true?so.length:prompt("Height : ","10");
    let tiles = new Array(mapColumns * mapRows);
-//    tiles = new Array
-//     for (i=0;i<mapColumns*mapRows;i++)
-//     {
-//     tiles[i] = ''
-//     }
-// mapColumns = 
-//const mapRows = 15,
-//document.getElementById("myCanvas").style.width = (tileWidth*mapColumns)+sourceWidth
-//document.getElementById("myCanvas").style.height = (tileHeight*mapRows)+sourceHeight
-
 let mapHeight = mapRows * tileHeight;
 space = (mapHeight + 175)
 document.getElementById("resultat").style.top = space+"px"
@@ -127,107 +109,16 @@ image.addEventListener('load', redrawSource);
 			}
 			//compteur += mapColumns
 			compteur++
+            if (tiles[compteur]==undefined){break}
 	 	}
-
-		//resultat += "'',"
-		//resultat += "'',"
-	 	resultat += "],"//+unescape("%0D%0A")
+	 	resultat += "],"
 	 }
-/*	 for (mu=0;mu<2;mu++){
-	 	resultat += "["
-		for (j=0;j<mapColumns;j++)
-	 	{
-	 		resultat += "'',"
-			//compteur += mapColumns
-			compteur++
-	 	}
-	 	resultat += "],"+unescape("%0D%0A")
-		}
-*/		resultat += "]"
-         fin = "</textarea></form>"
+		resultat += "]"
+         fin = "</textarea><br><iframe src='downloadcode.html' frameborder=0></form>"
 	 	document.getElementById('resultat').innerHTML = debut+resultat+"|"+backgroundlv+"&{x:"+x+"-y:"+y+"}"+fin
 	 	document.cookie = "kb="+document.cookie.split("kb=")[1].split(";")[0]+";"
- 	 	document.cookie = "editorresult="+document.code.code.value
-//         jj = new Function("document.getElementById('resultat').innerHTML.exec('copy')")
-//         jj()
-
-	 	//+document.getElementById('resultat').innerHTML
-//document.getElementById('scripter').innerHTML = "<script>alert(document.code.code.value)<\/script>"
-//setTimeout("try{alert(code)}catch(e){alert(e)}",100)
-//alert(code)
+ 	 	localStorage.setItem("level",document.code.code.value)
 }
-
-
-// draw the grid
-// for (let i = 0; i <= mapColumns; i++) {
-//   context.moveTo(i * tileWidth, sourceHeight);
-//   context.lineTo(i * tileWidth, mapHeight);
-// }
-// context.stroke();
-// for (let i = 0; i <= mapRows; i++) {
-//   context.moveTo(0,sourceHeight+ (i * tileHeight));
-//   context.lineTo(mapWidth, i * tileHeight);
-// }
-// context.stroke();
-
-//   function redrawSource() {
-//   context.drawImage(image, 0, 0, sourceWidth, sourceHeight, 0, 0, sourceWidth, sourceHeight);
-// }
-//  
-//  function doMouseClick(e) {
-//   let x = e.pageX;
-//   let y = e.pageY;
-//   console.log(e)
-//   let gridX = Math.floor(x / tileWidth) * tileWidth ;
-//   let gridY = Math.floor(y / tileHeight) * tileHeight;
-// //  alert(x+","+y)
-//   if (y > 0 && y < sourceHeight && x < sourceWidth) { // source
-//     let tileX = Math.floor(x / tileWidth);
-//     let tileY = Math.floor((y - mapHeight) / tileHeight);
-//     sourceTile = tileX;
-// //     alert(sourceTile)
-//     sourceX = gridX;
-//     sourceY = 0;
-//     redrawSource();
-//     drawBox();
-//   }
-//   if (y > sourceHeight && y < sourceHeight + mapHeight && x < mapWidth) { // target
-//     context.clearRect(gridX, gridY, tileWidth, tileHeight);
-//     context.drawImage(image, sourceX, sourceY, tileWidth, tileHeight, gridX, gridY, tileWidth, tileHeight);
-//     let tileX = Math.floor(x / tileWidth);
-//     let tileY = Math.floor(y / tileHeight);
-//     let targetTile =(tileY-1) * mapColumns + tileX;
-//     tiles[targetTile] = sourceTile;
-//     // update the string    
-//     let string = '[';
-//     for (let i = 0; i < mapColumns*mapRows; i++) {
-//     			//	for (let j = 0; j < mapRows; j++) {
-//       if (tiles[i] != undefined) string = string + tiles[i];
-//       string = string + ',';
-//     }//}
-//     
-//     string = string + '];';
-//     document.getElementById('result').innerHTML = string;
-//     convert()
-//   }
-// }
-//  
-// function doMouseMove(e) {
-//   let x = e.clientX;
-//   let y = e.clientY;
-//  
-//   if (y > 0 && y < sourceHeight && x < sourceWidth) { // source
-//     let gridX = Math.floor(x / tileWidth) * tileWidth;
-//     let gridY = Math.floor(y / tileHeight) * tileHeight;
-//     context.clearRect(0, 0, sourceWidth, sourceHeight);
-//     redrawSource();
-//     context.beginPath();
-//     context.strokeStyle = 'blue';
-//     context.rect(gridX, 0, tileWidth, tileHeight);
-//     context.stroke();
-//     drawBox();
-//   }
-// }
 
 function redrawSource() {
   context.drawImage(image, 0, 0, sourceWidth, sourceHeight, 0, mapHeight, sourceWidth, sourceHeight);

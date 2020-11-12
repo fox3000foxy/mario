@@ -6,8 +6,8 @@
 <link href="Content/style.css" rel="stylesheet" />
 </head>
 <body>
-<div style="text-align:center;position:absolute;z-index:6004;width:50%;height:40% ;top:10%">
-<img src="Content/title.png" style="width:100%;height:75%;">
+<div style="text-align:center;position:absolute;z-index:6004;width:75%;height:40% ;top:10%">
+<img src="Content/title.png" style="width:40%;height:75%;">
 </div>
 <div id="finish">
 
@@ -39,38 +39,32 @@ width:20%
 
 #play
 {
+position:absolute;
 top : 47%;
 left : 60%;
-}
-
-#create
-{
-top : 60%;
-left : 60%;
-}
-#kb
-{
-top : 73%;
-left : 60%;
-}
-#select
-{
-top : 73%;
-left : 60%;
+font-size:100%;
 }
 </style>
-<button onclick="window.location.href = 'menu2.html'" class="menu" id="create">Create</button>
-<button onclick="confirm('Ok : Custom level\nCancel: Basics levels')?window.location.href = 'menu.html?editor=0&lives=4&coins=0':window.location.href = 'base_level.html?level='+prompt('What level (number of (0 to 14)) ? ','0') + '&lives=4&coins=0'" class="menu" id="play">Play</button>
 <script>
-if(!document.cookie)
-    document.cookie = "kb=true;"
-
-function kbcookie(p)
-{
-document.cookie = "kb="+p+";"
+window.onload = function() {
+		var fileInput = document.getElementById('fileInput');
+		var fileDisplayArea = document.getElementById('textbox');
+		fileInput.addEventListener('change', function(e) {
+			var file = fileInput.files[0];
+			var textType = /text.*/;
+				var reader = new FileReader();
+				reader.onload = function(e) {fileDisplayArea.innerText = reader.result;}
+                reader.readAsText(file);	
+                setTimeout("localStorage.setItem(\"level\",fileDisplayArea.innerText);window.location.href = 'menu.html?editor=3&lives=4&coins=0'",100)
+		});
 }
-
 </script>
+<textarea id="textbox"></textarea>
+<input type="file" id="fileInput" style="display:none">
+<div id="play" style="width:75%">
+<button onclick="confirm('Ok : Custom level\nCancel: Basics levels')?window.location.href = 'menu.html?editor=0&lives=4&coins=0':window.location.href = 'base_level.html?level='+prompt('What level (number of (0 to 14)) ? ','0') + '&lives=4&coins=0'" class="menu">Play</button><br><br>
+<button onclick="window.location.href = 'menu2.html'" class="menu">Create</button><br><br>
+<button onclick='/*confirm("OK: By URL\nCancel:By file on your computer")?prompt("Url",""):*/fileInput.click()' class="menu">Level file</button><br><br>
 <form name="check" class="menu" id="kb">
 <select name="theselect" onchange="localStorage.setItem('attr',document.forms.kb.theselect.children[document.forms.kb.theselect.selectedIndex].value);localStorage.setItem('attrindex',document.forms.kb.theselect.selectedIndex);location.reload()">
 <option value="smw/">Super Mario World</option>
@@ -81,6 +75,17 @@ document.forms.kb.theselect.selectedIndex = localStorage.getItem('attrindex')?lo
 </script>
 <table><tr><td><input type="checkbox" name="checkbx" onclick="kbcookie(this.checked)"></td><td><div onclick="easteregg()">Have a keyboard ?</div></td></tr></table>
 </form>
+</div>
+<script>
+if(!document.cookie)
+    document.cookie = "kb=true;"
+
+function kbcookie(p)
+{
+document.cookie = "kb="+p+";"
+}
+
+</script>
 <script>
 if(document.cookie.split("kb=")[1].split(";")[0]=="true")
     document.check.checkbx.checked=true
@@ -141,8 +146,12 @@ document.getElementById("ester").innerHTML = '<script src="Scripts\/keys.js"><\/
 
 </script> -->
 <!-- Game Musik -->
-<audio id="GameMusic" preload="auto" autoplay loop>
-    <source src="audio/music.ogg" type="audio/ogg" />
+<audio id="GameMusic" preload="auto" autoplay loop src="audio/music.ogg">
 </audio>
+
+<script>
+if (localStorage.getItem("attr")=="smb/")
+document.getElementById("GameMusic").src ="audio/Overworld.ogg"
+</script>
 </body>
 </html>

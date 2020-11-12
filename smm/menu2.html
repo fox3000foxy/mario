@@ -58,8 +58,13 @@ document.getElementById("3").style.visibility = "hidden"
 document.getElementById("4").style.visibility = "hidden"
 document.getElementById("5").style.visibility = "visible"
 editortoplay()
+localStorage.setItem("editorfinish",false)
 document.getElementById("1").focus()
 }
+
+//playtoeditor
+setInterval("if(localStorage.getItem('editorfinish')=='true'){action2()}",50)
+
 function action2()
 {
 document.getElementById("1").style.visibility = "hidden"
@@ -75,7 +80,7 @@ document.getElementById("2").style.visibility = "hidden"
 document.getElementById("3").style.visibility = "visible"
 }
 
-function editortoplay(){document.getElementById("1").src = "menu.html?editor=2"}
+function editortoplay(){document.getElementById("1").src = "menu.html?editor=3&lives=999&coins=0"}
 </script>
 </head>
 <body>

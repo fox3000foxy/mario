@@ -5,7 +5,6 @@
 <title>Super Mario HTML5 Test</title>
 <link href="Content/style.css" rel="stylesheet" />
 </head>
-
 <body contextmenu="mymenu">
 <!-- actions -->
 		<script>
@@ -90,9 +89,13 @@ numberCoin = parseInt(location.href.split("coins=")[1].split("&")[0])
 document.getElementById('coinNumber').innerHTML = numberCoin
 </script>
 <!-- Game Musik -->
-<audio id="GameMusic" preload="auto" autoplay loop>
-    <source src="audio/music.ogg" type="audio/ogg">
+<audio id="GameMusic" preload="auto" autoplay loop src="audio/music.ogg">
 </audio>
+
+<script>
+if (localStorage.getItem("attr")=="smb/")
+document.getElementById("GameMusic").src ="audio/Overworld.ogg"
+</script>
 
 <div id="buttonscontrol">
 <button class="controls" id="leftbutton" style="left:10%;top:90%;z-index:2000" onclick="leftpush()"> < </button>
